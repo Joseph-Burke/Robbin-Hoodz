@@ -7,10 +7,14 @@ export default class GameScene extends Phaser.Scene {
 
   preload () {
     // load images
-    this.load.image('logo', 'assets/logo.png');
+
   }
 
   create () {
-    this.add.image(400, 300, 'logo');
+    this.add.image(400, 150, "sky").setDisplaySize(800, 300);
+    // This is a possible way of putting the sky in that covers more horizontal space.
+    // this.add.image(400, 300, "sky").setScale(2);
+    
+    this.add.image(400, 250, "mountain").setScale(1.2);
   }
 };
