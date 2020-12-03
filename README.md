@@ -2,7 +2,7 @@
 
 Robbin' Hoodz is an "infinite runner" game made with PhaserJS.
 
-In it, you play as old-school outlaw Robin Hood as he flees from the scene of his latest act vigilante wealth re-distribution.
+In it, you play as old-school outlaw **Robin Hood** as he flees from the scene of his latest act of vigilante wealth re-distribution.
 
 The aim of the game is to continue running along the platforms for the longest distance possible.
 
