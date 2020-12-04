@@ -91,13 +91,16 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image("pines", "assets/Background/pine1.png");
     this.load.image("ground", "assets/Tile/Ground/ground_2.png");
     this.load.spritesheet("player", "assets/adventurer-Sheet.png", { frameWidth: 50, frameHeight: 37 });
-    this.load.audio('bgMusic', ['assets/TownTheme.mp3']);
+    this.load.audio('bigPoppa', ['assets/music/big_poppa.mp3',]);
+    this.load.audio('putItOn', ['assets/music/put_it_on.mp3',]);
+    this.load.audio('californiaLove', ['assets/music/california_love.mp3',]);
+    this.load.audio('msJackson', ['assets/music/ms_jackson.mp3',]);
   }
 
   ready () {
     this.readyCount++;
     if (this.readyCount === 2) {
-      this.scene.start('Game');
+      this.scene.start('Title');
     }
   }
 };
