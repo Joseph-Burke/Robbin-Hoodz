@@ -46,15 +46,21 @@ export default class GameScene extends Phaser.Scene {
     this.anims.create({
       key: "running",
       frames: this.anims.generateFrameNumbers("player", { start: 9, end: 13 }),
-      frameRate: 10,
+      frameRate: 15,
       repeat: -1
     });
+
+    this.anims.create({
+      key: 'jumping',
+      frames: this.anims.generateFrameNumbers("player", { start: 15, end: 22 }),
+      frameRate: 15,
+      repeat: 0
+    })
 
     this.physics.add.collider(this.player, this.platformGroup);
     this.input.on("pointerdown", this.jump, this);
   }
 
-  // // the core of the script: platform are added from the pool or created on the fly
   addPlatform(platformWidth, posX) {
     let platform;
     if (this.platformPool.getLength()) {
@@ -69,7 +75,7 @@ export default class GameScene extends Phaser.Scene {
         game.config.height * 0.8,
         "ground"
       );
-      console.log(platform);
+      // console.log(platform);
       platform.setDisplaySize(platform.width, platform.height);
       platform.setImmovable(true);
       platform.setVelocityX(this.gameOptions.platformStartSpeed * -1);
@@ -93,6 +99,7 @@ export default class GameScene extends Phaser.Scene {
       }
       this.player.setVelocityY(gameOptions.jumpForce * -1);
       this.playerJumps++;
+      this.player.anims.play('jumping', false);
     }
   }
 
