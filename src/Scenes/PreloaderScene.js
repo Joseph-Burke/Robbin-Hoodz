@@ -90,6 +90,7 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image("distantPines", "assets/Background/pine2.png");
     this.load.image("pines", "assets/Background/pine1.png");
     this.load.image("ground", "assets/Tile/Ground/ground_2.png");
+    this.load.spritesheet("player", "assets/adventurer-Sheet.png", { frameWidth: 50, frameHeight: 37 });
     this.load.audio('bgMusic', ['assets/TownTheme.mp3']);
   }
 
