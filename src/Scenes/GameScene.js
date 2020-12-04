@@ -38,7 +38,7 @@ export default class GameScene extends Phaser.Scene {
     this.player = this.physics.add
       .sprite(
         this.gameOptions.playerStartPosition,
-        game.config.height / 2,
+        this.nextPlatformHeight - 200 || this.game.config.height * 0.5,
         "player"
       )
       .setScale(2);
@@ -86,7 +86,6 @@ export default class GameScene extends Phaser.Scene {
       platform.setVelocityX(this.gameOptions.platformStartSpeed * -1);
       this.platformGroup.add(platform);
       this.nextPlatformHeight = helpers.calculateNextPlatformHeight(platform);
-      // console.log(this.nextPlatformHeight);
     }
 
     platform.displayWidth = platformWidth;
@@ -99,7 +98,7 @@ export default class GameScene extends Phaser.Scene {
   jump() {
     if (
       this.player.body.touching.down ||
-      (this.playerJumps > 0 && this.playerJumps < this.gameOptions.jumps)
+      (this.playerJumps < this.gameOptions.jumps)
     ) {
       if (this.player.body.touching.down) {
         this.playerJumps = 0;

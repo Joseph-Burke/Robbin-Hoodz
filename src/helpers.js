@@ -5,7 +5,9 @@ export default {
 
     let ratio = distanceFromLast / 100;
     console.log(ratio);
-    let nextHeight = Phaser.Math.Between((lastHeight - (50/ratio)), Math.min(lastHeight + 30, game.config.height * 0.8));
+    let min = Math.max(lastHeight - (50 / ratio), lastHeight - 50, 150);
+    let max = Math.min(lastHeight + 25, game.config.height * 0.8);
+    let nextHeight = Phaser.Math.Between(min, max);
 
     if (nextHeight > 0) {
       return nextHeight
