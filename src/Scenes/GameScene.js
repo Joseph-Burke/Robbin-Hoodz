@@ -37,10 +37,11 @@ export default class GameScene extends Phaser.Scene {
 
     this.player = this.physics.add.sprite(
       this.gameOptions.playerStartPosition,
-      game.config.height / 2,
-      "player"
+      game.config.height / 2
+      , "player"
     ).setScale(2);
     this.player.setGravityY(this.gameOptions.playerGravity);
+    this.player.setBodySize(6, 36);
 
     this.anims.create({
       key: "running",
@@ -66,8 +67,10 @@ export default class GameScene extends Phaser.Scene {
       platform = this.physics.add.sprite(
         posX,
         game.config.height * 0.8,
-        "platform"
+        "ground"
       );
+      console.log(platform);
+      platform.setDisplaySize(platform.width, platform.height);
       platform.setImmovable(true);
       platform.setVelocityX(this.gameOptions.platformStartSpeed * -1);
       this.platformGroup.add(platform);
