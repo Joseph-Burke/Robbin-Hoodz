@@ -1,5 +1,5 @@
 import "phaser";
-import gameOptions from '../Config/gameOptions';
+import gameOptions from "../Config/gameOptions";
 
 export default class GameScene extends Phaser.Scene {
   constructor() {
@@ -17,16 +17,15 @@ export default class GameScene extends Phaser.Scene {
     this.add.image(400, 250, "mountain").setScale(1.2);
     this.add.image(400, 325, "pines").setScale(1.2);
     this.add.image(400, 400, "distantPines").setScale(1.2);
-    
 
     this.platformGroup = this.add.group({
-      removeCallback: function (platform) {
+      removeCallback: function(platform) {
         platform.scene.platformPool.add(platform);
       }
     });
 
     this.platformPool = this.add.group({
-      removeCallback: function (platform) {
+      removeCallback: function(platform) {
         platform.scene.platformGroup.add(platform);
       }
     });
@@ -35,13 +34,16 @@ export default class GameScene extends Phaser.Scene {
 
     this.addPlatform(game.config.width, game.config.width / 2);
 
-    this.player = this.physics.add.sprite(
-      this.gameOptions.playerStartPosition,
-      game.config.height / 2
-      , "player"
-    ).setScale(2);
+    this.player = this.physics.add
+      .sprite(
+        this.gameOptions.playerStartPosition,
+        game.config.height / 2,
+        "player"
+      )
+      .setScale(2);
     this.player.setGravityY(this.gameOptions.playerGravity);
     this.player.setBodySize(6, 36);
+    this.player.jumping = false;
 
     this.anims.create({
       key: "running",
@@ -51,13 +53,15 @@ export default class GameScene extends Phaser.Scene {
     });
 
     this.anims.create({
-      key: 'jumping',
+      key: "jumping",
       frames: this.anims.generateFrameNumbers("player", { start: 15, end: 22 }),
       frameRate: 15,
       repeat: 0
-    })
+    });
 
-    this.physics.add.collider(this.player, this.platformGroup);
+    this.physics.add.collider(this.player, this.platformGroup, () => {
+      this.player.jumping = false;
+    });
     this.input.on("pointerdown", this.jump, this);
   }
 
@@ -97,9 +101,10 @@ export default class GameScene extends Phaser.Scene {
       if (this.player.body.touching.down) {
         this.playerJumps = 0;
       }
+      this.player.jumping = true;
       this.player.setVelocityY(gameOptions.jumpForce * -1);
       this.playerJumps++;
-      this.player.anims.play('jumping', false);
+      this.player.anims.play("jumping", false);
     }
   }
 
@@ -109,8 +114,8 @@ export default class GameScene extends Phaser.Scene {
     }
     this.player.x = this.gameOptions.playerStartPosition;
 
-    let minDistance = game.config.width
-    this.platformGroup.getChildren().forEach(function (platform) {
+    let minDistance = game.config.width;
+    this.platformGroup.getChildren().forEach(function(platform) {
       let platformDistance =
         game.config.width - platform.x - platform.displayWidth / 2;
       minDistance = Math.min(minDistance, platformDistance);
@@ -132,7 +137,9 @@ export default class GameScene extends Phaser.Scene {
     }
 
     if (this.player.body.touching.down) {
-      this.player.anims.play('running', true);
+      this.player.anims.play("running", true);
+    } else if (!this.player.jumping) {
+      this.player.anims.play("jumping", false, 7);
     }
   }
 }
