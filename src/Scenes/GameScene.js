@@ -1,5 +1,6 @@
 import "phaser";
 import gameOptions from "../Config/gameOptions";
+import helpers from "../helpers";
 
 export default class GameScene extends Phaser.Scene {
   constructor() {
@@ -70,20 +71,22 @@ export default class GameScene extends Phaser.Scene {
     if (this.platformPool.getLength()) {
       platform = this.platformPool.getFirst();
       platform.x = posX;
+      platform.y = this.game.config.height * 0.8;
       platform.active = true;
       platform.visible = true;
       this.platformPool.remove(platform);
     } else {
       platform = this.physics.add.sprite(
         posX,
-        game.config.height * 0.8,
+        this.nextPlatformHeight,
         "ground"
       );
-      // console.log(platform);
       platform.setDisplaySize(platform.width, platform.height);
       platform.setImmovable(true);
       platform.setVelocityX(this.gameOptions.platformStartSpeed * -1);
       this.platformGroup.add(platform);
+      this.nextPlatformHeight = helpers.calculateNextPlatformHeight(platform);
+      // console.log(this.nextPlatformHeight);
     }
 
     platform.displayWidth = platformWidth;
