@@ -89,6 +89,7 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image("mountain", "assets/Background/mountain2.png");
     this.load.image("distantPines", "assets/Background/pine2.png");
     this.load.image("pines", "assets/Background/pine1.png");
+    this.load.image("ground", "assets/Tile/Ground/ground_2.png");
     this.load.audio('bgMusic', ['assets/TownTheme.mp3']);
   }
 
