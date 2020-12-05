@@ -63,6 +63,7 @@ export default class GameScene extends Phaser.Scene {
     this.physics.add.collider(this.player, this.platformGroup, () => {
       this.player.jumping = false;
     });
+
     this.input.on("pointerdown", this.jump, this);
   }
 
@@ -93,6 +94,21 @@ export default class GameScene extends Phaser.Scene {
       this.gameOptions.spawnRange[0],
       this.gameOptions.spawnRange[1]
     );
+    this.addCoin(platform);
+  }
+
+  addCoin(platform) {
+    console.log('Make a new coin!');
+    let coin = this.physics.add
+      .sprite(
+        platform.x,
+        platform.y-(platform.height * 2),
+        "coin"
+      )
+      .setScale(2)
+      .setGravityY(1000)
+      .setVelocityX(this.gameOptions.platformStartSpeed * -1);
+    this.physics.add.collider(this.platformGroup, coin, () => coin.setVelocityX(0));
   }
 
   jump() {
@@ -136,6 +152,7 @@ export default class GameScene extends Phaser.Scene {
         nextPlatformWidth,
         game.config.width + nextPlatformWidth / 2
       );
+      this.addCoin(this.nextPlatformDistance, this.nextPlatformHeight - 20);
     }
 
     if (this.player.body.touching.down) {
