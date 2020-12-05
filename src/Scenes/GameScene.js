@@ -67,7 +67,7 @@ export default class GameScene extends Phaser.Scene {
       frames: this.anims.generateFrameNumbers("coin"),
       frameRate: 20,
       repeat: -1
-    })
+    });
 
     this.physics.add.collider(this.player, this.platformGroup, () => {
       this.player.jumping = false;
@@ -103,27 +103,37 @@ export default class GameScene extends Phaser.Scene {
       this.gameOptions.spawnRange[0],
       this.gameOptions.spawnRange[1]
     );
-    this.addCoin(platform);
+
+    if (this.platformGroup.getChildren().length > 1) {
+      this.addCoin(platform);
+    }
   }
 
   addCoin(platform) {
     let coin = this.physics.add
-      .sprite(
-        platform.x,
-        platform.y-(platform.height * 2),
-        "coin"
-      )
+      .sprite(platform.x, platform.y - platform.height * 2, "coin")
       .setScale(2)
       .setGravityY(1000)
       .setVelocityX(this.gameOptions.platformStartSpeed * -1);
-    this.physics.add.collider(this.platformGroup, coin, () => coin.setVelocityX(0));
+
+    this.physics.add.collider(this.platformGroup, coin, () =>
+      coin.setVelocityX(0)
+    );
+
+    if (this.player) {
+      this.physics.add.collider(this.player, coin, () => {
+        this.coinGroup.killAndHide(coin);
+        this.coinGroup.remove(coin);
+        this.collectCoin(coin)
+      });
+    }
     this.coinGroup.add(coin);
   }
 
   jump() {
     if (
       this.player.body.touching.down ||
-      (this.playerJumps < this.gameOptions.jumps)
+      this.playerJumps < this.gameOptions.jumps
     ) {
       if (this.player.body.touching.down) {
         this.playerJumps = 0;
@@ -134,6 +144,11 @@ export default class GameScene extends Phaser.Scene {
       this.player.anims.play("jumping", false);
     }
   }
+
+  collectCoin(coin) {
+    coin.disableBody(true, true);
+    this.score ? this.score++ : this.score = 1;
+  };
 
   update() {
     if (this.player.y > game.config.height) {
@@ -171,14 +186,12 @@ export default class GameScene extends Phaser.Scene {
     }
 
     this.coinGroup.getChildren().forEach(coin => {
-      if ((coin.x + coin.width/2) < 0) {
+      if (coin.x + coin.width / 2 < 0) {
         this.coinGroup.killAndHide(coin);
         this.coinGroup.remove(coin);
       } else {
         coin.anims.play("revolving coin", true);
       }
     });
-
-
   }
 }
