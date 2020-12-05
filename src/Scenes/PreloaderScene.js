@@ -1,4 +1,5 @@
 import 'phaser';
+import helpers from '../helpers';
 
 export default class PreloaderScene extends Phaser.Scene {
   constructor () {
@@ -79,6 +80,9 @@ export default class PreloaderScene extends Phaser.Scene {
 
     this.timedEvent = this.time.delayedCall(3000, this.ready, [], this);
 
+    let [songTitle, songURL] = helpers.getRandomSong();
+    this.sys.game.globals.model.chosenSongTitle = songTitle;
+
     // load assets needed in our game
     this.load.image('blueButton1', 'assets/ui/blue_button02.png');
     this.load.image('blueButton2', 'assets/ui/blue_button03.png');
@@ -92,10 +96,7 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image("ground", "assets/Tile/Ground/ground_2.png");
     this.load.spritesheet("player", "assets/adventurer-Sheet.png", { frameWidth: 50, frameHeight: 37 });
     this.load.spritesheet("coin", "assets/coin.png", { frameWidth: 16, frameHeight: 16 });
-    this.load.audio('bigPoppa', ['assets/music/big_poppa.mp3',]);
-    this.load.audio('putItOn', ['assets/music/put_it_on.mp3',]);
-    this.load.audio('californiaLove', ['assets/music/california_love.mp3',]);
-    this.load.audio('msJackson', ['assets/music/ms_jackson.mp3',]);
+    this.load.audio(songTitle, songURL);
   }
 
   ready () {

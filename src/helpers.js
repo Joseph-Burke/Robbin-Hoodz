@@ -13,5 +13,17 @@ export default {
     } else {
       return game.config.height * 0.8
     }
+  },
+
+  getRandomSong: () => {
+    let songArray = [
+      ['bigPoppa', ['assets/music/big_poppa.mp3',]],
+      ['putItOn', ['assets/music/put_it_on.mp3',]],
+      ['californiaLove', ['assets/music/california_love.mp3',]],
+      ['msJackson', ['assets/music/ms_jackson.mp3',]]
+    ]
+    return songArray[Phaser.Math.Between(0, songArray.length)]
   }
+
+
 }

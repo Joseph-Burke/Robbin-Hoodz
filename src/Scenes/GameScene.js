@@ -31,7 +31,7 @@ export default class GameScene extends Phaser.Scene {
       }
     });
 
-    this.coinGroup = this.add.group()
+    this.coinGroup = this.add.group();
 
     this.playerJumps = 0;
 
@@ -118,7 +118,6 @@ export default class GameScene extends Phaser.Scene {
       .setVelocityX(this.gameOptions.platformStartSpeed * -1);
     this.physics.add.collider(this.platformGroup, coin, () => coin.setVelocityX(0));
     this.coinGroup.add(coin);
-    console.log(this.coinGroup.getChildren());
   }
 
   jump() {
