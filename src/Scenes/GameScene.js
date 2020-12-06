@@ -40,6 +40,7 @@ export default class GameScene extends Phaser.Scene {
     });
 
     this.coinGroup = this.add.group();
+    this.collectCoinGroup = this.add.group();
 
     this.playerJumps = 0;
 
@@ -130,11 +131,28 @@ export default class GameScene extends Phaser.Scene {
       coin.setVelocityX(0)
     );
 
+    coin.collectionAnimation = () => {
+      let collectedCoin = this.physics.add.sprite(coin.x, coin.y - 50, 'coin')
+      .setVelocityX(-gameOptions.platformStartSpeed)
+      .setVelocityY(-50)
+      .setGravityY(49);
+      this.collectCoinGroup.add(collectedCoin);
+      setTimeout(
+        () => {
+          this.collectCoinGroup.killAndHide(collectedCoin);
+          this.collectCoinGroup.remove(collectedCoin);
+        },
+        400
+      )
+    }
+
+
     if (this.player) {
       this.physics.add.overlap(this.player, coin, () => {
         this.coinGroup.killAndHide(coin);
         this.coinGroup.remove(coin);
         this.collectCoin(coin);
+        coin.collectionAnimation();
       });
     }
 
@@ -205,6 +223,11 @@ export default class GameScene extends Phaser.Scene {
         coin.anims.play("revolving coin", true);
       }
     });
+
+    this.collectCoinGroup.getChildren().forEach(collectedCoin => {
+      collectedCoin.anims.play("revolving coin", true)
+      collectedCoin.anims.setTimeScale(5);
+    })
 
     this.groundGroup.getChildren().forEach(groundObject => {
       if (groundObject.x - (groundObject.displayWidth/2) < 0 && this.groundGroup.getChildren().length == 1) {
