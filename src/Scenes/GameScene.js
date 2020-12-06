@@ -18,9 +18,14 @@ export default class GameScene extends Phaser.Scene {
     this.add.image(400, 250, "mountain").setScale(1.2);
     this.add.image(400, 325, "pines").setScale(1.2);
     this.add.image(400, 400, "distantPines").setScale(1.2);
+    this.groundGroup = this.add.group();
+    this.generateGround();
 
-    this.score = 0
-    this.scoreText = this.add.text(16, 16, `Score: ${this.score}`, { fontSize: '32px', fill: '#000' });
+    this.score = 0;
+    this.scoreText = this.add.text(16, 16, `Score: ${this.score}`, {
+      fontSize: "32px",
+      fill: "#000"
+    });
 
     this.platformGroup = this.add.group({
       removeCallback: function(platform) {
@@ -47,6 +52,7 @@ export default class GameScene extends Phaser.Scene {
         "player"
       )
       .setScale(2);
+
     this.player.setGravityY(this.gameOptions.playerGravity);
     this.player.setBodySize(6, 36);
     this.player.jumping = false;
@@ -76,6 +82,7 @@ export default class GameScene extends Phaser.Scene {
       this.player.jumping = false;
     });
 
+    this.physics.add.collider(this.player, this.groundGroup);
     this.input.on("pointerdown", this.jump, this);
   }
 
@@ -127,7 +134,7 @@ export default class GameScene extends Phaser.Scene {
       this.physics.add.collider(this.player, coin, () => {
         this.coinGroup.killAndHide(coin);
         this.coinGroup.remove(coin);
-        this.collectCoin(coin)
+        this.collectCoin(coin);
       });
     }
     this.coinGroup.add(coin);
@@ -150,9 +157,9 @@ export default class GameScene extends Phaser.Scene {
 
   collectCoin(coin) {
     coin.disableBody(true, true);
-    this.score++
+    this.score++;
     this.scoreText.setText(`Score: ${this.score}`);
-  };
+  }
 
   update() {
     if (this.player.y > game.config.height) {
@@ -197,5 +204,24 @@ export default class GameScene extends Phaser.Scene {
         coin.anims.play("revolving coin", true);
       }
     });
+
+    this.groundGroup.getChildren().forEach(groundObject => {
+      if (groundObject.x - (groundObject.displayWidth/2) < 0 && this.groundGroup.getChildren().length == 1) {
+        this.generateGround(groundObject.x + groundObject.displayWidth - 6);
+      }
+      if (groundObject.x + (groundObject.displayWidth / 2) < 0) {
+        this.groundGroup.killAndHide(groundObject);
+        this.groundGroup.remove(groundObject);
+      }
+    });
+  }
+
+  generateGround(xPosition = this.game.config.width) {
+    let newGround = this.physics.add
+      .sprite(xPosition, this.game.config.height - 45, "ground")
+      .setDisplaySize(this.game.config.width * 2, 90)
+      .setImmovable(true)
+      .setVelocityX(this.gameOptions.platformStartSpeed * -1);
+    this.groundGroup.add(newGround);
   }
 }
