@@ -19,6 +19,9 @@ export default class GameScene extends Phaser.Scene {
     this.add.image(400, 325, "pines").setScale(1.2);
     this.add.image(400, 400, "distantPines").setScale(1.2);
 
+    this.score = 0
+    this.scoreText = this.add.text(16, 16, `Score: ${this.score}`, { fontSize: '32px', fill: '#000' });
+
     this.platformGroup = this.add.group({
       removeCallback: function(platform) {
         platform.scene.platformPool.add(platform);
@@ -147,7 +150,8 @@ export default class GameScene extends Phaser.Scene {
 
   collectCoin(coin) {
     coin.disableBody(true, true);
-    this.score ? this.score++ : this.score = 1;
+    this.score++
+    this.scoreText.setText(`Score: ${this.score}`);
   };
 
   update() {
