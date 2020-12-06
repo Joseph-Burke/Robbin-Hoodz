@@ -131,12 +131,13 @@ export default class GameScene extends Phaser.Scene {
     );
 
     if (this.player) {
-      this.physics.add.collider(this.player, coin, () => {
+      this.physics.add.overlap(this.player, coin, () => {
         this.coinGroup.killAndHide(coin);
         this.coinGroup.remove(coin);
         this.collectCoin(coin);
       });
     }
+
     this.coinGroup.add(coin);
   }
 
