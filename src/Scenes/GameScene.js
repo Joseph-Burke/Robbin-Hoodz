@@ -138,11 +138,11 @@ export default class GameScene extends Phaser.Scene {
     let platform;
     if (this.platformPool.getLength()) {
       platform = this.platformPool.getFirst();
-      platform.x = posX;
-      platform.y = this.game.config.height * 0.8;
+      platform.setPosition(posX, this.nextPlatformHeight);
       platform.active = true;
       platform.visible = true;
       this.platformPool.remove(platform);
+      this.nextPlatformHeight = helpers.calculateNextPlatformHeight(platform);
     } else {
       platform = this.physics.add.sprite(
         posX,
@@ -345,7 +345,7 @@ export default class GameScene extends Phaser.Scene {
     this.finalScoreDisplay = this.add.text(
       0,
       0,
-      `You redistributed ${this.givenGold + this.stolenGold} gold pieces to the good people of \nNottingham, but it was not enough to satiate your passion\nfor wealth distribution.\nYou died.\nCheers anyway duck!\nClick to return to the menu.`,
+      `You redistributed ${this.givenGold + this.stolenGold} gold pieces to the good people of \nNottingham, but it was not enough to satiate your passion\nfor wealth redistribution.\nYou died.\nCheers anyway duck!\nClick to return to the menu.`,
       {
         fontSize: "22px",
         fill: "#fff"
