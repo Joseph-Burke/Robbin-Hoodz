@@ -216,6 +216,7 @@ export default class GameScene extends Phaser.Scene {
           this.coinGroup.remove(coin);
           this.collectCoin(coin);
           coin.collectionAnimation();
+          this.sound.play('coin1', {volume:0.5, detune: 0.5, rate: 1.3});
         });
       }
   
@@ -236,6 +237,7 @@ export default class GameScene extends Phaser.Scene {
       this.player.setVelocityY(gameOptions.jumpForce * -1);
       this.playerJumps++;
       this.player.anims.play("jumping", false);
+      helpers.playJumpSound(this);
     }
   }
 

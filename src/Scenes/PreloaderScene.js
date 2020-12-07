@@ -97,6 +97,14 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.spritesheet("ground", "assets/Tile/Ground/ground_2.png", { frameWidth: 16, frameHeight: 16 });
     this.load.spritesheet("player", "assets/adventurer-Sheet.png", { frameWidth: 50, frameHeight: 37 });
     this.load.spritesheet("coin", "assets/coin.png", { frameWidth: 16, frameHeight: 16 });
+    this.load.audio('jump1', "assets/sfx/jump1.wav");
+    this.load.audio('jump2', "assets/sfx/jump2.wav");
+    this.load.audio('jump3', "assets/sfx/jump3.wav");
+    this.load.audio('jump4', "assets/sfx/jump4.wav");
+    this.load.audio('coin1', "assets/sfx/coin1.mp3");
+    this.load.audio('rise1', "assets/sfx/rise1.mp3");
+    this.load.audio('rise2', "assets/sfx/rise2.mp3");
+    this.load.audio('rise3', "assets/sfx/rise3.mp3");
     this.load.audio(songTitle, songURL);
   }
 

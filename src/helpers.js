@@ -39,6 +39,19 @@ export default {
       ["californiaLove", ["assets/music/california_love.mp3"]],
       ["msJackson", ["assets/music/ms_jackson.mp3"]]
     ];
-    return songArray[Phaser.Math.Between(0, songArray.length)];
+    return songArray[Phaser.Math.Between(0, songArray.length-1)];
+  },
+
+  playJumpSound: scene => {
+    let jumps = [
+      'jump1',
+      'jump2',
+      'jump3',
+      'jump4',
+  ]
+
+  if (Math.random() > (3/4)) {
+    scene.sound.play(jumps[Phaser.Math.Between(0, jumps.length-1)], {volume: 0.85})
+  }
   }
 };
