@@ -121,6 +121,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   addCoin(platform) {
+    // Depending on the platform height, it will spread coins across the surface of the platform
     let coin = this.physics.add
       .sprite(platform.x, platform.y - platform.height * 2, "coin")
       .setScale(2)
