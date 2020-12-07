@@ -19,8 +19,7 @@ export default class GameScene extends Phaser.Scene {
     this.stolenGold = 15;
     this.givenGold = 0;
     this.nextDonation = 20;
-    this.secondsUntilDonation = 10 - (this.secondsElapsed % 10);
-    // this.secondsUntilDonation = 10 - (this.secondsElapsed % 10)
+    this.secondsUntilDonation = 10 - (this.secondsElapsed % 11);
 
     // Place background imagery
     this.add.image(400, 150, "sky").setDisplaySize(800, 300);
@@ -320,10 +319,10 @@ export default class GameScene extends Phaser.Scene {
     this.physics.pause();
     this.anims.pauseAll();
 
-    this.input.on('pointerdown', () => {
+    this.input.on("pointerdown", () => {
       this.physics.resume();
       this.anims.resumeAll();
-      this.scene.start('Title');
+      this.scene.start("Title");
     });
 
     [
@@ -346,7 +345,11 @@ export default class GameScene extends Phaser.Scene {
     this.finalScoreDisplay = this.add.text(
       0,
       0,
-      `You redistributed ${this.givenGold} gold pieces to the good people of Nottingham.\nClick to return to the menu.`
-    );
+      `You redistributed ${this.givenGold + this.stolenGold} gold pieces to the good people of \nNottingham, but it was not enough to satiate your passion\nfor wealth distribution.\nYou died.\nCheers anyway duck!\nClick to return to the menu.`,
+      {
+        fontSize: "22px",
+        fill: "#fff"
+      }
+    )
   }
 }
