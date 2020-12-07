@@ -111,16 +111,18 @@ export default class GameScene extends Phaser.Scene {
 
     this.physics.add.collider(this.player, this.groundGroup);
     this.input.on("pointerdown", this.jump, this);
-    
-    this.emitter = new Phaser.Events.EventEmitter();
-    this.emitter.on('giveToThePoor', this.makeDonation);
 
-    this.timer = this.time.addEvent({
-      delay: 5000, 
-      timeScale: 1, 
-      loop: true, 
-      callback: () => this.emitter.emit('giveToThePoor')
-    });
+    this.time.addEvent({
+      startAt: 0,
+      delay: 1000,
+      loop: true,
+      callback: () => {
+        this.secondsElapsed++;
+        if (this.secondsElapsed % 10 == 0) {
+          this.makeDonation();
+        }
+      }
+    })
   }
 
   addPlatform(platformWidth, posX) {
@@ -279,7 +281,10 @@ export default class GameScene extends Phaser.Scene {
     this.gameOptions.jumps =
       this.score >= 30 ? 1 : this.score >= 15 ? 2 : 3;
 
-    this.jumpsAvailable.setText(`Jumps available: ${this.gameOptions.jumps}`);
+    this.jumpsAvailableDisplay.setText(`Jumps available: ${this.gameOptions.jumps}`);
+    this.roundTimer.setText(`Time until next donation: ${10 - this.secondsElapsed % 10}`);
+    this.stolenGoldDisplay.setText(`Stolen from the rich: ${this.stolenGold}`);
+    this.givenGoldDisplay.setText(`Given to the poor: ${this.givenGold}`);
   }
 
   generateGround(xPosition = this.game.config.width) {
