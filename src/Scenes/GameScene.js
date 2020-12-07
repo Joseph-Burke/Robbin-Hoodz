@@ -22,10 +22,20 @@ export default class GameScene extends Phaser.Scene {
     this.generateGround();
 
     this.score = 0;
-    this.scoreText = this.add.text(16, 16, `Score: ${this.score}`, {
+    this.stolenGold = this.add.text(16, 16, `Stolen: ${this.score}`, {
       fontSize: "32px",
       fill: "#000"
     });
+
+    this.jumpsAvailable = this.add.text(16, 64, "Jumps available: 2", {
+      fontSize: "32px",
+      fill: "#000"
+    });
+
+    // this.roundTimer = this.add.text(16, this.game.config.width/2, `Time until next donation: ${this.score}`, {
+    //   fontSize: "32px",
+    //   fill: "#000"
+    // });
 
     this.platformGroup = this.add.group({
       removeCallback: function(platform) {
@@ -133,20 +143,17 @@ export default class GameScene extends Phaser.Scene {
     );
 
     coin.collectionAnimation = () => {
-      let collectedCoin = this.physics.add.sprite(coin.x, coin.y - 50, 'coin')
-      .setVelocityX(-gameOptions.platformStartSpeed)
-      .setVelocityY(-50)
-      .setGravityY(49);
+      let collectedCoin = this.physics.add
+        .sprite(coin.x, coin.y - 50, "coin")
+        .setVelocityX(-gameOptions.platformStartSpeed)
+        .setVelocityY(-50)
+        .setGravityY(49);
       this.collectCoinGroup.add(collectedCoin);
-      setTimeout(
-        () => {
-          this.collectCoinGroup.killAndHide(collectedCoin);
-          this.collectCoinGroup.remove(collectedCoin);
-        },
-        400
-      )
-    }
-
+      setTimeout(() => {
+        this.collectCoinGroup.killAndHide(collectedCoin);
+        this.collectCoinGroup.remove(collectedCoin);
+      }, 400);
+    };
 
     if (this.player) {
       this.physics.add.overlap(this.player, coin, () => {
@@ -178,7 +185,7 @@ export default class GameScene extends Phaser.Scene {
   collectCoin(coin) {
     coin.disableBody(true, true);
     this.score++;
-    this.scoreText.setText(`Score: ${this.score}`);
+    this.stolenGold.setText(`Stolen: ${this.score}`);
   }
 
   update() {
@@ -226,19 +233,27 @@ export default class GameScene extends Phaser.Scene {
     });
 
     this.collectCoinGroup.getChildren().forEach(collectedCoin => {
-      collectedCoin.anims.play("revolving coin", true)
+      collectedCoin.anims.play("revolving coin", true);
       collectedCoin.anims.setTimeScale(5);
-    })
+    });
 
     this.groundGroup.getChildren().forEach(groundObject => {
-      if (groundObject.x - (groundObject.displayWidth/2) < 0 && this.groundGroup.getChildren().length == 1) {
+      if (
+        groundObject.x - groundObject.displayWidth / 2 < 0 &&
+        this.groundGroup.getChildren().length == 1
+      ) {
         this.generateGround(groundObject.x + groundObject.displayWidth - 6);
       }
-      if (groundObject.x + (groundObject.displayWidth / 2) < 0) {
+      if (groundObject.x + groundObject.displayWidth / 2 < 0) {
         this.groundGroup.killAndHide(groundObject);
         this.groundGroup.remove(groundObject);
       }
     });
+
+    this.gameOptions.jumps =
+      this.score >= 30 ? 1 : this.score >= 15 ? 2 : 3;
+
+    this.jumpsAvailable.setText(`Jumps available: ${this.gameOptions.jumps}`);
   }
 
   generateGround(xPosition = this.game.config.width) {
