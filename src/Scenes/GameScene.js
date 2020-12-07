@@ -13,7 +13,14 @@ export default class GameScene extends Phaser.Scene {
   }
 
   create() {
-    // Background Imagery
+    // Initialise variables
+    this.secondsElapsed = 0
+    this.score = 0;
+    this.stolenGold = 15;
+    this.givenGold = 0;
+    this.nextDonation = 6;
+
+    // Place background imagery
     this.add.image(400, 150, "sky").setDisplaySize(800, 300);
     this.add.image(400, 250, "mountain").setScale(1.2);
     this.add.image(400, 325, "pines").setScale(1.2);
@@ -21,21 +28,30 @@ export default class GameScene extends Phaser.Scene {
     this.groundGroup = this.add.group();
     this.generateGround();
 
-    this.score = 0;
-    this.stolenGold = this.add.text(16, 16, `Stolen: ${this.score}`, {
+    // Initialise UI
+    this.stolenGoldDisplay = this.add.text(16, 16, `Stolen: ${this.score}`, {
       fontSize: "32px",
       fill: "#000"
     });
 
-    this.jumpsAvailable = this.add.text(16, 64, "Jumps available: 2", {
+    this.jumpsAvailableDisplay = this.add.text(16, 64, "Jumps available: 2", {
       fontSize: "32px",
       fill: "#000"
     });
 
-    // this.roundTimer = this.add.text(16, this.game.config.width/2, `Time until next donation: ${this.score}`, {
-    //   fontSize: "32px",
-    //   fill: "#000"
-    // });
+    this.roundTimer = this.add.text(16, 112, `Time until next donation: ${10 - this.secondsElapsed % 10}`, {
+      fontSize: "32px",
+      fill: "#000"
+    });
+
+    this.givenGoldDisplay = this.add.text(16, 144, `Given to the poor: ${this.givenGold}`, {
+      fontSize: "32px",
+      fill: "#000"
+    });
+
+    this.groundGroup = this.add.group();
+
+    this.generateGround();
 
     this.platformGroup = this.add.group({
       removeCallback: function(platform) {
