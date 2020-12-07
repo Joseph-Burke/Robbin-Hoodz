@@ -14,18 +14,20 @@ export default class GameScene extends Phaser.Scene {
 
   create() {
     // Initialise variables
-    this.secondsElapsed = 0
+    this.secondsElapsed = 0;
     this.score = 0;
     this.stolenGold = 15;
     this.givenGold = 0;
-    this.nextDonation = 6;
+    this.nextDonation = 20;
+    this.secondsUntilDonation = 10 - (this.secondsElapsed % 10);
+    // this.secondsUntilDonation = 10 - (this.secondsElapsed % 10)
 
     // Place background imagery
     this.add.image(400, 150, "sky").setDisplaySize(800, 300);
     this.add.image(400, 250, "mountain").setScale(1.2);
     this.add.image(400, 325, "pines").setScale(1.2);
     this.add.image(400, 400, "distantPines").setScale(1.2);
-    
+
     // Initialise UI
     this.stolenGoldDisplay = this.add.text(16, 16, `Stolen: ${this.score}`, {
       fontSize: "32px",
@@ -37,15 +39,25 @@ export default class GameScene extends Phaser.Scene {
       fill: "#000"
     });
 
-    this.roundTimer = this.add.text(16, 112, `Time until next donation: ${10 - this.secondsElapsed % 10}`, {
-      fontSize: "32px",
-      fill: "#000"
-    });
+    this.roundTimer = this.add.text(
+      16,
+      112,
+      `Time until next donation: ${this.secondsUntilDonation}`,
+      {
+        fontSize: "32px",
+        fill: "#000"
+      }
+    );
 
-    this.givenGoldDisplay = this.add.text(16, 144, `Given to the poor: ${this.givenGold}`, {
-      fontSize: "32px",
-      fill: "#000"
-    });
+    this.givenGoldDisplay = this.add.text(
+      16,
+      144,
+      `Given to the poor: ${this.givenGold}`,
+      {
+        fontSize: "32px",
+        fill: "#000"
+      }
+    );
 
     this.groundGroup = this.add.group();
 
@@ -116,11 +128,11 @@ export default class GameScene extends Phaser.Scene {
       loop: true,
       callback: () => {
         this.secondsElapsed++;
-        if (this.secondsElapsed % 10 == 0) {
+        if (this.secondsUntilDonation == 0) {
           this.makeDonation();
         }
       }
-    })
+    });
   }
 
   addPlatform(platformWidth, posX) {
@@ -272,11 +284,15 @@ export default class GameScene extends Phaser.Scene {
       }
     });
 
-    this.gameOptions.jumps =
-      this.score >= 30 ? 1 : this.score >= 15 ? 2 : 3;
+    this.gameOptions.jumps = this.score >= 30 ? 1 : this.score >= 15 ? 2 : 3;
 
-    this.jumpsAvailableDisplay.setText(`Jumps available: ${this.gameOptions.jumps}`);
-    this.roundTimer.setText(`Time until next donation: ${10 - this.secondsElapsed % 10}`);
+    this.jumpsAvailableDisplay.setText(
+      `Jumps available: ${this.gameOptions.jumps}`
+    );
+    this.secondsUntilDonation = 10 - (this.secondsElapsed % 11);
+    this.roundTimer.setText(
+      `Time until next donation: ${this.secondsUntilDonation}`
+    );
     this.stolenGoldDisplay.setText(`Stolen from the rich: ${this.stolenGold}`);
     this.givenGoldDisplay.setText(`Given to the poor: ${this.givenGold}`);
   }
@@ -292,11 +308,45 @@ export default class GameScene extends Phaser.Scene {
 
   makeDonation() {
     if (this.nextDonation > this.stolenGold) {
-      console.log('you lose')
+      this.gameOver();
     } else {
       this.givenGold += this.nextDonation;
       this.stolenGold -= this.nextDonation;
       this.nextDonation += 2;
     }
+  }
+
+  gameOver() {
+    this.physics.pause();
+    this.anims.pauseAll();
+
+    this.input.on('pointerdown', () => {
+      this.physics.resume();
+      this.anims.resumeAll();
+      this.scene.start('Title');
+    });
+
+    [
+      this.jumpsAvailableDisplay,
+      this.roundTimer,
+      this.stolenGoldDisplay,
+      this.givenGoldDisplay
+    ].forEach(display => display.setVisible(false));
+
+    this.gameOverDisplay = this.add.text(0, 0, `Game Over!`, {
+      fontSize: "64px",
+      fill: "#000"
+    });
+
+    this.gameOverDisplay.setPosition(
+      this.game.config.width / 2 - this.gameOverDisplay.width / 2,
+      this.game.config.height / 2 - this.gameOverDisplay.height / 2
+    );
+
+    this.finalScoreDisplay = this.add.text(
+      0,
+      0,
+      `You redistributed ${this.givenGold} gold pieces to the good people of Nottingham.\nClick to return to the menu.`
+    );
   }
 }
