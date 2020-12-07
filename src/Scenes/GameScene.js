@@ -168,40 +168,57 @@ export default class GameScene extends Phaser.Scene {
   }
 
   addCoin(platform) {
-    // Depending on the platform height, it will spread coins across the surface of the platform
-    let coin = this.physics.add
-      .sprite(platform.x, platform.y - platform.height * 2, "coin")
-      .setScale(2)
-      .setGravityY(1000)
-      .setVelocityX(this.gameOptions.platformStartSpeed * -1);
+    let topQuarter = this.game.config.height / 4
+    let topHalf = topQuarter * 2
 
-    this.physics.add.collider(this.platformGroup, coin, () =>
-      coin.setVelocityX(0)
-    );
-
-    coin.collectionAnimation = () => {
-      let collectedCoin = this.physics.add
-        .sprite(coin.x, coin.y - 50, "coin")
-        .setVelocityX(-gameOptions.platformStartSpeed)
-        .setVelocityY(-50)
-        .setGravityY(49);
-      this.collectCoinGroup.add(collectedCoin);
-      setTimeout(() => {
-        this.collectCoinGroup.killAndHide(collectedCoin);
-        this.collectCoinGroup.remove(collectedCoin);
-      }, 400);
-    };
-
-    if (this.player) {
-      this.physics.add.overlap(this.player, coin, () => {
-        this.coinGroup.killAndHide(coin);
-        this.coinGroup.remove(coin);
-        this.collectCoin(coin);
-        coin.collectionAnimation();
-      });
+    if (platform) {
+      if (platform.y < topQuarter) {
+        platform.numberOfCoins = Phaser.Math.Between(3, 4)
+      } else if (platform.y < topHalf) {
+        platform.numberOfCoins = Phaser.Math.Between(2, 3)
+      } else {
+        platform.numberOfCoins = 1
+      }
     }
 
-    this.coinGroup.add(coin);
+    for (let i = 0; i < platform.numberOfCoins; i++) {
+      let coinPosition = (platform.x - platform.width/2) 
+      coinPosition += (platform.width / platform.numberOfCoins * (i+0.5))
+      let coin = this.physics.add
+        .sprite(coinPosition, platform.y - platform.height * 2, "coin")
+        .setScale(2)
+        .setGravityY(1000)
+        .setVelocityX(this.gameOptions.platformStartSpeed * -1);
+  
+      this.physics.add.collider(this.platformGroup, coin, () =>
+        coin.setVelocityX(0)
+      );
+  
+      coin.collectionAnimation = () => {
+        let collectedCoin = this.physics.add
+          .sprite(coin.x, coin.y - 50, "coin")
+          .setVelocityX(-gameOptions.platformStartSpeed)
+          .setVelocityY(-50)
+          .setGravityY(49);
+        this.collectCoinGroup.add(collectedCoin);
+        setTimeout(() => {
+          this.collectCoinGroup.killAndHide(collectedCoin);
+          this.collectCoinGroup.remove(collectedCoin);
+        }, 400);
+      };
+  
+      if (this.player) {
+        this.physics.add.overlap(this.player, coin, () => {
+          this.coinGroup.killAndHide(coin);
+          this.coinGroup.remove(coin);
+          this.collectCoin(coin);
+          coin.collectionAnimation();
+        });
+      }
+  
+      this.coinGroup.add(coin);
+    }
+
   }
 
   jump() {
@@ -247,7 +264,6 @@ export default class GameScene extends Phaser.Scene {
         nextPlatformWidth,
         game.config.width + nextPlatformWidth / 2
       );
-      this.addCoin(this.nextPlatformDistance, this.nextPlatformHeight - 20);
     }
 
     if (this.player.body.touching.down) {
