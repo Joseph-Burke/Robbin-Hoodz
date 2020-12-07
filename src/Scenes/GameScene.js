@@ -25,9 +25,7 @@ export default class GameScene extends Phaser.Scene {
     this.add.image(400, 250, "mountain").setScale(1.2);
     this.add.image(400, 325, "pines").setScale(1.2);
     this.add.image(400, 400, "distantPines").setScale(1.2);
-    this.groundGroup = this.add.group();
-    this.generateGround();
-
+    
     // Initialise UI
     this.stolenGoldDisplay = this.add.text(16, 16, `Stolen: ${this.score}`, {
       fontSize: "32px",
@@ -212,14 +210,10 @@ export default class GameScene extends Phaser.Scene {
 
   collectCoin(coin) {
     coin.disableBody(true, true);
-    this.score++;
-    this.stolenGold.setText(`Stolen: ${this.score}`);
+    this.stolenGold++;
   }
 
   update() {
-    if (this.player.y > game.config.height) {
-      this.scene.start("Game");
-    }
     this.player.x = this.gameOptions.playerStartPosition;
 
     let minDistance = game.config.width;
@@ -297,6 +291,12 @@ export default class GameScene extends Phaser.Scene {
   }
 
   makeDonation() {
-    console.log('donation made')
+    if (this.nextDonation > this.stolenGold) {
+      console.log('you lose')
+    } else {
+      this.givenGold += this.nextDonation;
+      this.stolenGold -= this.nextDonation;
+      this.nextDonation += 2;
+    }
   }
 }
