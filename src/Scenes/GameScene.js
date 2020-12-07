@@ -95,6 +95,16 @@ export default class GameScene extends Phaser.Scene {
 
     this.physics.add.collider(this.player, this.groundGroup);
     this.input.on("pointerdown", this.jump, this);
+    
+    this.emitter = new Phaser.Events.EventEmitter();
+    this.emitter.on('giveToThePoor', this.makeDonation);
+
+    this.timer = this.time.addEvent({
+      delay: 5000, 
+      timeScale: 1, 
+      loop: true, 
+      callback: () => this.emitter.emit('giveToThePoor')
+    });
   }
 
   addPlatform(platformWidth, posX) {
@@ -263,5 +273,9 @@ export default class GameScene extends Phaser.Scene {
       .setImmovable(true)
       .setVelocityX(this.gameOptions.platformStartSpeed * -1);
     this.groundGroup.add(newGround);
+  }
+
+  makeDonation() {
+    console.log('donation made')
   }
 }
