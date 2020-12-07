@@ -18,7 +18,7 @@ export default class GameScene extends Phaser.Scene {
     this.score = 0;
     this.stolenGold = 15;
     this.givenGold = 0;
-    this.nextDonation = 20;
+    this.nextDonation = 2;
     this.secondsUntilDonation = 10 - (this.secondsElapsed % 11);
 
     // Place background imagery
