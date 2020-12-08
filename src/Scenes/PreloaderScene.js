@@ -98,9 +98,6 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image("plank1", "assets/plank1.png");
     this.load.image("plank2", "assets/plank2.png");
     this.load.image("plank3", "assets/plank3.png");
-    this.load.image("plank4", "assets/plank4.png");
-    this.load.image("plank5", "assets/plank5.png");
-    this.load.image("plank6", "assets/plank6.png");
 
     this.load.spritesheet("ground", "assets/Tile/Ground/ground_11.png", { frameWidth: 16, frameHeight: 16 });
     this.load.spritesheet("player", "assets/adventurer-Sheet.png", { frameWidth: 50, frameHeight: 37 });

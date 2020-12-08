@@ -189,11 +189,11 @@ export default class GameScene extends Phaser.Scene {
       platform = this.physics.add.sprite(
         posX,
         this.nextPlatformHeight,
-        "plank6"
+        helpers.getPlatformImage(platformWidth)
       );
+
       platform.setDisplaySize(platformWidth, 25);
       platform.setImmovable(true);
-      console.log(platform);
       platform.setVelocityX(this.gameOptions.platformStartSpeed * -1);
       this.platformGroup.add(platform);
       this.nextPlatformHeight = helpers.calculateNextPlatformHeight(platform);
