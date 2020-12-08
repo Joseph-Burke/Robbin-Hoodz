@@ -118,8 +118,8 @@ export default class GameScene extends Phaser.Scene {
       this.player.jumping = false;
     });
 
-    this.physics.add.collider(this.player, this.groundGroup);
-    this.input.on("pointerdown", this.jump, this);
+    this.physics.add.collider(this.player, this.groundGroup);   
+    this.input.keyboard.on('keydown-SPACE', this.jump, this);
 
     this.time.addEvent({
       startAt: 0,
