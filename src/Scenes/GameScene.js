@@ -21,11 +21,38 @@ export default class GameScene extends Phaser.Scene {
     this.nextDonation = 2;
     this.secondsUntilDonation = 10 - (this.secondsElapsed % 11);
 
-    // Place background imagery
-    this.add.image(400, 150, "sky").setDisplaySize(800, 300);
-    this.add.image(400, 250, "mountain").setScale(1.2);
-    this.add.image(400, 325, "pines").setScale(1.2);
-    this.add.image(400, 400, "distantPines").setScale(1.2);
+    this.sky = this.add.tileSprite(
+      400,
+      150,
+      null,
+      null,
+      'sky'
+    ).setScale(2);
+
+    this.mountains = this.add.tileSprite(
+      400,
+      250,
+      null,
+      null,
+      'mountain'
+    ).setTilePosition(200, 128).setScale(1.2);
+
+    this.distantPines = this.add.tileSprite(
+      400,
+      325,
+      800,
+      null,
+      'pines'
+    ).setTilePosition(200, 0).setScale(1.2);
+
+    this.pines = this.add.tileSprite(
+      400,
+      400,
+      800,
+      null,
+      'distantPines'
+    ).setTilePosition(200, 200).setScale(1.2);
+
 
     // Initialise UI
     this.stolenGoldDisplay = this.add.text(16, 16, `Stolen: ${this.score}`, {
@@ -315,6 +342,8 @@ export default class GameScene extends Phaser.Scene {
     );
     this.stolenGoldDisplay.setText(`Stolen from the rich: ${this.stolenGold}`);
     this.givenGoldDisplay.setText(`Given to the poor: ${this.givenGold}`);
+
+    this.moveBackground();
   }
 
   generateGround(xPosition = this.game.config.width) {
@@ -372,5 +401,12 @@ export default class GameScene extends Phaser.Scene {
         fill: "#fff"
       }
     )
+  }
+
+  moveBackground() {
+    this.sky.tilePositionX += 0.15
+    this.mountains.tilePositionX += 0.3
+    this.distantPines.tilePositionX += 0.6
+    this.pines.tilePositionX += 0.9
   }
 }
