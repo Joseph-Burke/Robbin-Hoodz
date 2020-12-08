@@ -116,15 +116,13 @@ export default class GameScene extends Phaser.Scene {
 
     this.coinGroup = this.add.group();
     this.collectCoinGroup = this.add.group();
-
     this.playerJumps = 0;
-
-    this.addPlatform(game.config.width, game.config.width / 2);
+    this.addPlatform(150, game.config.width + 150);
 
     this.player = this.physics.add
       .sprite(
         this.gameOptions.playerStartPosition,
-        this.nextPlatformHeight - 200 || this.game.config.height * 0.5,
+        this.grass.y - 200,
         "player"
       )
       .setScale(2);
