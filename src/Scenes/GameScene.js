@@ -317,6 +317,7 @@ export default class GameScene extends Phaser.Scene {
   gameOver() {
     this.physics.pause();
     this.anims.pauseAll();
+    this.submitScore('Joe', this.score);
 
     this.gameOverDisplay = this.add.text(0, 0, `Time's Up!`, {
       fontSize: "64px",
@@ -373,10 +374,6 @@ export default class GameScene extends Phaser.Scene {
       this.game.config.width / 2 - this.gameOverInstruction.width / 2,
       (3 * this.game.config.height) / 4 - this.gameOverInstruction.height / 2
     );
-
-    fetch('https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/lR6cnR2w4frbwCA1QKLu/scores', {mode: 'cors'})
-      .then(response => response.json())
-      .then(object => console.log(object));
   }
 
   moveBackground() {
@@ -396,5 +393,24 @@ export default class GameScene extends Phaser.Scene {
       });
 
     this.goldDisplay.setText(`${this.score}`);
+  }
+
+  submitScore(username, score) {
+    fetch(
+      'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/lR6cnR2w4frbwCA1QKLu/scores',
+      { 
+        method: "POST",
+        mode: 'cors',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          user: username,
+          score: score.toString()
+        })
+      },
+      )
+      .then(response => response.json())
+      .then(object => console.log(object));
   }
 }
