@@ -17,6 +17,9 @@ export default class GameScene extends Phaser.Scene {
     this.collectedCoinGroup = this.add.group();
     this.physics.resume();
     this.anims.resumeAll();
+    this.events.once('gameOver', () => {
+      this.gameOver();
+    });
 
     this.sky = this.add.tileSprite(400, 150, null, null, "sky").setScale(2);
 
@@ -307,12 +310,12 @@ export default class GameScene extends Phaser.Scene {
       this.moveBackground();
       this.updateDisplays();
     } else {
-      this.gameOver();
+      this.events.emit('gameOver');
     }
   }
 
   gameOver() {
-    this.input.once("pointerdown", () => {
+    this.input.on("pointerdown", () => {
       this.scene.start("Title");
     });
 
@@ -358,6 +361,11 @@ export default class GameScene extends Phaser.Scene {
       this.game.config.width / 2 - this.gameOverInstruction.width / 2,
       (3 * this.game.config.height) / 4 - this.gameOverInstruction.height / 2
     );
+
+    fetch('https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/lR6cnR2w4frbwCA1QKLu/scores', {mode: 'cors'})
+      .then(response => response.json())
+      .then(object => console.log(object));
+
   }
 
   moveBackground() {
