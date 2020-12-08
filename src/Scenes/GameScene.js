@@ -47,12 +47,11 @@ export default class GameScene extends Phaser.Scene {
 
     this.pines = this.add.tileSprite(
       400,
-      400,
+      410,
       800,
       null,
       'distantPines'
     ).setTilePosition(200, 200).setScale(1.2);
-
 
     // Initialise UI
     this.stolenGoldDisplay = this.add.text(16, 16, `Stolen: ${this.score}`, {
@@ -85,9 +84,23 @@ export default class GameScene extends Phaser.Scene {
       }
     );
 
-    this.groundGroup = this.add.group();
+    this.ground = this.add.tileSprite(
+      this.game.config.width / 2,
+      this.game.config.height - 40,
+      this.game.config.width,
+      80,
+      'ground')
+      .setTileScale(4, 6);
 
-    this.generateGround();
+    this.grass = this.add.tileSprite(
+      this.game.config.width / 2,
+      this.game.config.height - 70,
+      this.game.config.width,
+      30,
+      'grass')
+      .setTileScale(3.5, 4);
+
+    this.grass = this.physics.add.existing(this.grass, true);
 
     this.platformGroup = this.add.group({
       removeCallback: function(platform) {
@@ -144,8 +157,10 @@ export default class GameScene extends Phaser.Scene {
     this.physics.add.collider(this.player, this.platformGroup, () => {
       this.player.jumping = false;
     });
+    this.physics.add.collider(this.player, this.grass, () => {
+      this.player.jumping = false;
+    });
 
-    this.physics.add.collider(this.player, this.groundGroup);   
     this.input.keyboard.on('keydown-SPACE', this.jump, this);
 
     this.time.addEvent({
@@ -174,10 +189,11 @@ export default class GameScene extends Phaser.Scene {
       platform = this.physics.add.sprite(
         posX,
         this.nextPlatformHeight,
-        "ground"
+        "plank6"
       );
-      platform.setDisplaySize(platform.width, platform.height);
+      platform.setDisplaySize(platformWidth, 25);
       platform.setImmovable(true);
+      console.log(platform);
       platform.setVelocityX(this.gameOptions.platformStartSpeed * -1);
       this.platformGroup.add(platform);
       this.nextPlatformHeight = helpers.calculateNextPlatformHeight(platform);
@@ -318,19 +334,6 @@ export default class GameScene extends Phaser.Scene {
       collectedCoin.anims.setTimeScale(5);
     });
 
-    this.groundGroup.getChildren().forEach(groundObject => {
-      if (
-        groundObject.x - groundObject.displayWidth / 2 < 0 &&
-        this.groundGroup.getChildren().length == 1
-      ) {
-        this.generateGround(groundObject.x + groundObject.displayWidth - 6);
-      }
-      if (groundObject.x + groundObject.displayWidth / 2 < 0) {
-        this.groundGroup.killAndHide(groundObject);
-        this.groundGroup.remove(groundObject);
-      }
-    });
-
     this.gameOptions.jumps = this.score >= 30 ? 1 : this.score >= 15 ? 2 : 3;
 
     this.jumpsAvailableDisplay.setText(
@@ -344,15 +347,6 @@ export default class GameScene extends Phaser.Scene {
     this.givenGoldDisplay.setText(`Given to the poor: ${this.givenGold}`);
 
     this.moveBackground();
-  }
-
-  generateGround(xPosition = this.game.config.width) {
-    let newGround = this.physics.add
-      .sprite(xPosition, this.game.config.height - 45, "ground")
-      .setDisplaySize(this.game.config.width * 2, 90)
-      .setImmovable(true)
-      .setVelocityX(this.gameOptions.platformStartSpeed * -1);
-    this.groundGroup.add(newGround);
   }
 
   makeDonation() {
@@ -404,9 +398,10 @@ export default class GameScene extends Phaser.Scene {
   }
 
   moveBackground() {
-    this.sky.tilePositionX += 0.15
-    this.mountains.tilePositionX += 0.3
-    this.distantPines.tilePositionX += 0.6
-    this.pines.tilePositionX += 0.9
+    this.sky.tilePositionX += 0.15;
+    this.mountains.tilePositionX += 0.3;
+    this.distantPines.tilePositionX += 0.6;
+    this.pines.tilePositionX += 0.9;
+    this.grass.tilePositionX += 1.75;
   }
 }

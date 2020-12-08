@@ -89,12 +89,20 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('phaserLogo', 'assets/logo.png');
     this.load.image('box', 'assets/ui/grey_box.png');
     this.load.image('checkedBox', 'assets/ui/blue_boxCheckmark.png');
-    this.load.image("sky", "assets/Background/sky.png");
+    this.load.image("sky", "assets/Background/sky_cloud.png");
     this.load.image("mountain", "assets/Background/mountain2.png");
     this.load.image("distantPines", "assets/Background/pine2.png");
     this.load.image("pines", "assets/Background/pine1.png");
     this.load.image("grass", "assets/Tile/Grass/grass_1.png");
-    this.load.spritesheet("ground", "assets/Tile/Ground/ground_2.png", { frameWidth: 16, frameHeight: 16 });
+    
+    this.load.image("plank1", "assets/plank1.png");
+    this.load.image("plank2", "assets/plank2.png");
+    this.load.image("plank3", "assets/plank3.png");
+    this.load.image("plank4", "assets/plank4.png");
+    this.load.image("plank5", "assets/plank5.png");
+    this.load.image("plank6", "assets/plank6.png");
+
+    this.load.spritesheet("ground", "assets/Tile/Ground/ground_11.png", { frameWidth: 16, frameHeight: 16 });
     this.load.spritesheet("player", "assets/adventurer-Sheet.png", { frameWidth: 50, frameHeight: 37 });
     this.load.spritesheet("coin", "assets/coin.png", { frameWidth: 16, frameHeight: 16 });
     this.load.audio('jump1', "assets/sfx/jump1.wav");
