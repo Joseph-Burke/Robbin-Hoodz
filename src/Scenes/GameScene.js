@@ -15,6 +15,8 @@ export default class GameScene extends Phaser.Scene {
     this.playerJumps = this.gameOptions.jumps;
     this.coinGroup = this.add.group();
     this.collectedCoinGroup = this.add.group();
+    this.physics.resume();
+    this.anims.resumeAll();
 
     this.sky = this.add.tileSprite(400, 150, null, null, "sky").setScale(2);
 
