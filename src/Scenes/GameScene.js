@@ -16,8 +16,6 @@ export default class GameScene extends Phaser.Scene {
     // Initialise variables
     this.secondsElapsed = 0;
     this.score = 0;
-    this.nextDonation = 2;
-    this.secondsUntilDonation = 10 - (this.secondsElapsed % 11);
 
     this.sky = this.add.tileSprite(
       400,
@@ -55,16 +53,6 @@ export default class GameScene extends Phaser.Scene {
       fontSize: "32px",
       fill: "#000"
     });
-
-    this.roundTimer = this.add.text(
-      16,
-      112,
-      `Time until next donation: ${this.secondsUntilDonation}`,
-      {
-        fontSize: "32px",
-        fill: "#000"
-      }
-    );
 
     this.ground = this.add.tileSprite(
       this.game.config.width / 2,
@@ -149,9 +137,6 @@ export default class GameScene extends Phaser.Scene {
       loop: true,
       callback: () => {
         this.secondsElapsed++;
-        if (this.secondsUntilDonation == 0) {
-          this.makeDonation();
-        }
       }
     });
   }
@@ -318,10 +303,6 @@ export default class GameScene extends Phaser.Scene {
 
     this.jumpsAvailableDisplay.setText(
       `Jumps available: ${this.gameOptions.jumps}`
-    );
-    this.secondsUntilDonation = 10 - (this.secondsElapsed % 11);
-    this.roundTimer.setText(
-      `Time until next donation: ${this.secondsUntilDonation}`
     );
 
     this.moveBackground();
