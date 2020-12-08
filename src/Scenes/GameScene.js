@@ -49,11 +49,6 @@ export default class GameScene extends Phaser.Scene {
       'distantPines'
     ).setTilePosition(200, 200).setScale(1.2);
 
-    this.jumpsAvailableDisplay = this.add.text(16, 64, "Jumps available: 2", {
-      fontSize: "32px",
-      fill: "#000"
-    });
-
     this.ground = this.add.tileSprite(
       this.game.config.width / 2,
       this.game.config.height - 40,
@@ -299,12 +294,6 @@ export default class GameScene extends Phaser.Scene {
       collectedCoin.anims.setTimeScale(5);
     });
 
-    this.gameOptions.jumps = this.score >= 30 ? 1 : this.score >= 15 ? 2 : 3;
-
-    this.jumpsAvailableDisplay.setText(
-      `Jumps available: ${this.gameOptions.jumps}`
-    );
-
     this.moveBackground();
   }
 
@@ -317,11 +306,6 @@ export default class GameScene extends Phaser.Scene {
       this.anims.resumeAll();
       this.scene.start("Title");
     });
-
-    [
-      this.jumpsAvailableDisplay,
-      this.roundTimer,
-    ].forEach(display => display.setVisible(false));
 
     this.gameOverDisplay = this.add.text(0, 0, `Game Over!`, {
       fontSize: "64px",
