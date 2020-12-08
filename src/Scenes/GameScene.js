@@ -315,10 +315,6 @@ export default class GameScene extends Phaser.Scene {
   }
 
   gameOver() {
-    this.input.on("pointerdown", () => {
-      this.scene.start("Title");
-    });
-
     this.physics.pause();
     this.anims.pauseAll();
 
@@ -350,12 +346,28 @@ export default class GameScene extends Phaser.Scene {
     this.gameOverInstruction = this.add.text(
       0,
       0,
-      `Click anywhere to return to the menu`,
+      [
+        'Press M to return to the menu',
+        'Press L to view the leaderboard',
+        'Press P to play again',
+      ],
       {
         fontSize: "22px",
         fill: "#fff"
       }
     );
+
+    this.input.keyboard.on("keydown-M", () => {
+      this.scene.start("Title");
+    });
+
+    this.input.keyboard.on("keydown-P", () => {
+      this.scene.start("Game");
+    });
+
+    this.input.keyboard.on("keydown-L", () => {
+      this.scene.start("Leaderboard");
+    });
 
     this.gameOverInstruction.setPosition(
       this.game.config.width / 2 - this.gameOverInstruction.width / 2,
@@ -365,7 +377,6 @@ export default class GameScene extends Phaser.Scene {
     fetch('https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/lR6cnR2w4frbwCA1QKLu/scores', {mode: 'cors'})
       .then(response => response.json())
       .then(object => console.log(object));
-
   }
 
   moveBackground() {
