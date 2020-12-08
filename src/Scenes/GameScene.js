@@ -16,7 +16,6 @@ export default class GameScene extends Phaser.Scene {
     // Initialise variables
     this.secondsElapsed = 0;
     this.score = 0;
-    this.stolenGold = 15;
     this.givenGold = 0;
     this.nextDonation = 2;
     this.secondsUntilDonation = 10 - (this.secondsElapsed % 11);
@@ -52,12 +51,6 @@ export default class GameScene extends Phaser.Scene {
       null,
       'distantPines'
     ).setTilePosition(200, 200).setScale(1.2);
-
-    // Initialise UI
-    this.stolenGoldDisplay = this.add.text(16, 16, `Stolen: ${this.score}`, {
-      fontSize: "32px",
-      fill: "#000"
-    });
 
     this.jumpsAvailableDisplay = this.add.text(16, 64, "Jumps available: 2", {
       fontSize: "32px",
@@ -284,7 +277,7 @@ export default class GameScene extends Phaser.Scene {
 
   collectCoin(coin) {
     coin.disableBody(true, true);
-    this.stolenGold++;
+    this.score++;
   }
 
   update() {
@@ -341,20 +334,9 @@ export default class GameScene extends Phaser.Scene {
     this.roundTimer.setText(
       `Time until next donation: ${this.secondsUntilDonation}`
     );
-    this.stolenGoldDisplay.setText(`Stolen from the rich: ${this.stolenGold}`);
     this.givenGoldDisplay.setText(`Given to the poor: ${this.givenGold}`);
 
     this.moveBackground();
-  }
-
-  makeDonation() {
-    if (this.nextDonation > this.stolenGold) {
-      this.gameOver();
-    } else {
-      this.givenGold += this.nextDonation;
-      this.stolenGold -= this.nextDonation;
-      this.nextDonation += 2;
-    }
   }
 
   gameOver() {
@@ -370,7 +352,6 @@ export default class GameScene extends Phaser.Scene {
     [
       this.jumpsAvailableDisplay,
       this.roundTimer,
-      this.stolenGoldDisplay,
       this.givenGoldDisplay
     ].forEach(display => display.setVisible(false));
 
@@ -387,7 +368,7 @@ export default class GameScene extends Phaser.Scene {
     this.finalScoreDisplay = this.add.text(
       0,
       0,
-      `You redistributed ${this.givenGold + this.stolenGold} gold pieces to the good people of \nNottingham, but it was not enough to satiate your passion\nfor wealth redistribution.\nYou died.\nCheers anyway duck!\nClick to return to the menu.`,
+      `You redistributed ${this.score} gold pieces to the good people of \nNottingham, but it was not enough to satiate your passion\nfor wealth redistribution.\nYou died.\nCheers anyway duck!\nClick to return to the menu.`,
       {
         fontSize: "22px",
         fill: "#fff"
