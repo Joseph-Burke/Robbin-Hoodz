@@ -16,7 +16,6 @@ export default class GameScene extends Phaser.Scene {
     // Initialise variables
     this.secondsElapsed = 0;
     this.score = 0;
-    this.givenGold = 0;
     this.nextDonation = 2;
     this.secondsUntilDonation = 10 - (this.secondsElapsed % 11);
 
@@ -61,16 +60,6 @@ export default class GameScene extends Phaser.Scene {
       16,
       112,
       `Time until next donation: ${this.secondsUntilDonation}`,
-      {
-        fontSize: "32px",
-        fill: "#000"
-      }
-    );
-
-    this.givenGoldDisplay = this.add.text(
-      16,
-      144,
-      `Given to the poor: ${this.givenGold}`,
       {
         fontSize: "32px",
         fill: "#000"
@@ -334,7 +323,6 @@ export default class GameScene extends Phaser.Scene {
     this.roundTimer.setText(
       `Time until next donation: ${this.secondsUntilDonation}`
     );
-    this.givenGoldDisplay.setText(`Given to the poor: ${this.givenGold}`);
 
     this.moveBackground();
   }
@@ -352,7 +340,6 @@ export default class GameScene extends Phaser.Scene {
     [
       this.jumpsAvailableDisplay,
       this.roundTimer,
-      this.givenGoldDisplay
     ].forEach(display => display.setVisible(false));
 
     this.gameOverDisplay = this.add.text(0, 0, `Game Over!`, {
