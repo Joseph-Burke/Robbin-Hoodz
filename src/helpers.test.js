@@ -1,10 +1,6 @@
 import Phaser from 'phaser';
 import helpers from './helpers';
 
-// calculateNextPlatformHeight;
-
-// getRandomSong;
-
 describe('gets a random song selection', () => {
   const songInfo = helpers.getRandomSong();
   const possibleTitles = ['bigPoppa', 'putItOn', 'californiaLove', 'msJackson'];
@@ -23,8 +19,6 @@ describe('gets a random song selection', () => {
     expect(possiblePaths.includes(songInfo[1])).toBe(true);
   });
 });
-
-// getPlatformImage;
 
 describe("gets the path of a platform image depending on a platform's length", () => {
   const validKeys = ['plank1', 'plank2', 'plank3'];
