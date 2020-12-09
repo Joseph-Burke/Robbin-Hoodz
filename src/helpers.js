@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+const fetch = require("node-fetch");
 
 export default {
   calculateNextPlatformHeight: (previousPlatform, player, game) => {
