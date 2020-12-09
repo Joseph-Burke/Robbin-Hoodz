@@ -16,8 +16,9 @@ The aim of the game is to continue running along the platforms for the longest d
 
 ## Live Demo
 
-This project is not yet complete, so there is no Live Demo currently available.
+What are you waiting for?!
 
+Play the Live Demo [here](https://keen-leakey-c08599.netlify.app/)!
 
 ## Getting Started
 
