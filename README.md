@@ -26,10 +26,12 @@ What are you waiting for?!
 In the Game Design Document I created on the second day of this 5-day project, I laid out an "Emotional Experience" which described how I would like the player to feel. To paraphrase from that section and others from the same document:
 
 1. The player feels **engaged**, consistently **interested**, but **never stressed**.
-1. The game is not predictable or boring, but neither does it punish the player arbitrarily. The player is **rewarded for skill** and for paying close attention to the **dependable rules and physics** of the game.
-1. The design prioritises consistency and attractiveness over complexity/realism.
-1. The sound of the game is not just a repetitive feature that becomes irritating. All sounds and music must contribute positively to the gameplay and experience of the game.
-1. The game does not emphasise changes in surface-level appearance that only serve to distract the player from the game itself. Players don't enjoy being needlessly distracted by features which are irrelevant to the gameplay.
+2. The game is not predictable or boring, but neither does it punish the player arbitrarily. The player is **rewarded for skill** and for paying close attention to the **dependable rules and physics** of the game.
+3. The design prioritises consistency and attractiveness over complexity/realism.
+4. The sound of the game is not just a repetitive feature that becomes irritating. All sounds and music must contribute positively to the gameplay and experience of the game.
+5. The game does not emphasise changes in surface-level appearance that only serve to distract the player from the game itself. Players don't enjoy being needlessly distracted by features which are irrelevant to the gameplay.
+
+___
 
 ### Evaluation
 
@@ -38,6 +40,18 @@ I can personally vouch that my own experience playing the game matches the descr
 The design priorities were also borne out into the game. I put a good deal of work into making the background scenery attractive, to great effect I think, which also contributed to the Emotional Experience I initially intended.
 
 To achieve Aim 4, I implemented a "song selector" to pick from 4 possible background tracks to stop the music feeling too repetitive. The two sound effects I used were for jumping and coin-collecting, which are both key gameplay aspects, so the player's attention is not diverted from the gameplay. Jumping only has a 1 in 4 chance of triggering a sound effect, and when it does, it is a random jump sound from 4 possible sounds, so it is a more subtle feature that won't become too irritating. The coin-collection sound effect takes place for every coin collected, because this is the central activity of the game and I wanted to audibly acknowledge this special event. It was for this same reason that I broke with simplicity to add the small, spinning, collected coin animation.
+
+___
+
+### Game Design
+
+I made some design choices in accordance with my aims for the project. One was the choice of keys used to perform certain actions in the game. Initially, the character jumped on a mouseclick, but **I felt that a spacebar would generally be easier**, especially for quick jumps. I also made sure that the gameOver view required input that was **different from the jump control**, so the user wouldn't be able to press the space bar again accidentally and do something unintended. The GameScene itself has only a single control, which again contributed towards the **simplicity of design** and **ease of use** that I wanted my game to have. With only a single button to press, almost anyone could play this game and enjoy it.
+
+**I also deviated from my initial GDD on one aspect**: While I had originally envisioned a more complex score and jump system which entailed a ten-second timer at the end of which the player would lose a certain amount of gold, increasing each time, I decided to simplify the whole concept. I came to the conclusion that the most fun aspect of the game is simply jumping around, trying to land difficult jumps, making unlikely recoveries from falls and having fun the with the physics and unpredictable ups and downs of the game. I thought that the added complexity of the scoring would make it harder for new players to get into the game. So for this reason, I opted for a single 60-second timer, an unchanging number of jumps available and a 1-point-per-coin system so that players would easily get the hang of the game and feel comfortable.
+
+As for the structure of the Phaser scenes, I kept them as simple as possible. The attitude I gained during the design period was that players are interested in the gameplay and the fun of playing the game, so most of my attention was put into the GameScene itself. Another element of randomness was added in the preLoaderScene, where a random frame of my game's main character spriteSheet is displayed while the assets are loaded. Aside from that, all I wanted for the Interface scenes was that they present the player with options and information in a simple fashion. Given more time, I might have worked on these more, but with the time pressure as it was, I'm glad that I prioritised the GameScene itself.
+
+___
 
 In summary, I am very happy with the game and it's clear to me that writing a GDD before starting work really helped to guide my efforts towards a coherent idea of the game I wanted to make. One downfall of the game that arose from prioritising a pleasant and relaxing experience is that the potential for advancement and mastery is quite limited. Having a 60-second timer means that even the best possible player can't get a higher score than the number of coins that the game makes available during those 60 seconds. But all in all, I achieved my aims and I'm very pleased with the final product.
 
