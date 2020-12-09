@@ -18,7 +18,6 @@ export default class CreditsScene extends Phaser.Scene {
         "Game Creation: Joe Burke",
         " ",
         "Music: Beedle The Bardcore"],
-        // "Robbin' Hoodz is in no way\nrelated to or inspired by \nEnglish folk legend Robin Hood and \nany suggestion to the \ncontrary will be challenged \nin court"],
       { fontSize: "26px", fill: "#fff" }
     );
     this.zone = this.add.zone(
