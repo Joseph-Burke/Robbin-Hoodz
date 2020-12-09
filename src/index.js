@@ -34,5 +34,6 @@ if (localStorage.getItem('username')) {
   const button = document.getElementById('submitButton');
   button.addEventListener('click', () => {
     helpers.submitNameForm(input);
+    window.location.reload();
   });
 }
