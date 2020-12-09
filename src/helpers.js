@@ -55,5 +55,14 @@ export default {
         volume: 0.85
       });
     }
+  },
+
+  submitNameForm: event => {
+    let username = event.value;
+    console.log(event);
+    if (username === '') {username = 'Anonymous'};
+
+    localStorage.setItem("username", username);
+    window.location.reload();
   }
 };

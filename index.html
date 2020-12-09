@@ -2,8 +2,35 @@
 <html>
     <head>
         <meta charset="utf-8">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     </head>
-    <body>
+    <body class="container py-5 d-flex flex-column align-items-center">
+
+        <div class="d-flex flex-column align-items-center">
+
+            <div id="hide-unless-username" class="d-none">
+                <h1 class="text-center">Halt! Who goes there?</h1>
+                <form class="form d-flex flex-column align-items-center">
+                    
+                    <div class="form-group">
+                        <label for="nameInput">Your Name:</label>
+                        <input type="email" class="form-control" id="nameInput" placeholder="Robin Hood">
+                        <small>
+                            It's that thing people say to get your attention. Or whatever.</br>
+                            ...it's for the leaderboard.
+                        </small>
+                    </div>       
+                    
+                    <button class="btn btn-secondary" type="button" id="submitButton">Submit</button>
+                </form>
+            </div>
+                
+
+        </div>
+            
+        
+            
+
         <script src="build/project.bundle.js" charset="utf-8"></script>
     </body>
 </html>

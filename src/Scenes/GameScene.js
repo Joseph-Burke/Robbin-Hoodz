@@ -10,7 +10,7 @@ export default class GameScene extends Phaser.Scene {
 
   create() {
     this.secondsElapsed = 0;
-    this.secondsRemaining = 3;
+    this.secondsRemaining = 60;
     this.score = 0;
     this.playerJumps = this.gameOptions.jumps;
     this.coinGroup = this.add.group();
@@ -317,7 +317,7 @@ export default class GameScene extends Phaser.Scene {
   gameOver() {
     this.physics.pause();
     this.anims.pauseAll();
-    this.submitScore('Joe', this.score);
+    this.submitScore(localStorage.getItem('username'), this.score);
 
     this.gameOverDisplay = this.add.text(0, 0, `Time's Up!`, {
       fontSize: "64px",
@@ -410,7 +410,5 @@ export default class GameScene extends Phaser.Scene {
         })
       },
       )
-      .then(response => response.json())
-      .then(object => console.log(object));
   }
 }
