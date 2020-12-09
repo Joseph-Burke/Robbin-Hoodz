@@ -5,5 +5,5 @@ export default {
   playerGravity: 900,
   jumpForce: 400,
   playerStartPosition: 200,
-  jumps: 3
+  jumps: 3,
 };

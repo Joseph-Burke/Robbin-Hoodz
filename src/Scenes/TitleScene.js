@@ -3,15 +3,15 @@ import config from '../Config/config';
 import Button from '../Objects/Button';
 
 export default class TitleScene extends Phaser.Scene {
-  constructor () {
+  constructor() {
     super('Title');
   }
 
-  create () {
-    this.gameButton = new Button(this, config.width/2, config.height/4, 'blueButton1', 'blueButton2', 'Play', 'Game');
-    this.optionsButton = new Button(this, config.width/2, config.height/2 - 50, 'blueButton1', 'blueButton2', 'Options', 'Options');
-    this.leaderboardButton = new Button(this, config.width/2, config.height/2 + 50, 'blueButton1', 'blueButton2', 'Leaderboard', 'Leaderboard');
-    this.creditsButton = new Button(this, config.width/2, config.height*(3/4), 'blueButton1', 'blueButton2', 'Credits', 'Credits');
+  create() {
+    this.gameButton = new Button(this, config.width / 2, config.height / 4, 'blueButton1', 'blueButton2', 'Play', 'Game');
+    this.optionsButton = new Button(this, config.width / 2, config.height / 2 - 50, 'blueButton1', 'blueButton2', 'Options', 'Options');
+    this.leaderboardButton = new Button(this, config.width / 2, config.height / 2 + 50, 'blueButton1', 'blueButton2', 'Leaderboard', 'Leaderboard');
+    this.creditsButton = new Button(this, config.width / 2, config.height * (3 / 4), 'blueButton1', 'blueButton2', 'Credits', 'Credits');
 
     this.model = this.sys.game.globals.model;
     if (this.model.musicOn === true && this.model.bgMusicPlaying === false) {
@@ -22,17 +22,17 @@ export default class TitleScene extends Phaser.Scene {
     }
   }
 
-  centerButton (gameObject, offset = 0) {
+  centerButton(gameObject, offset = 0) {
     Phaser.Display.Align.In.Center(
       gameObject,
-      this.add.zone(config.width/2, config.height/2 - offset * 100, config.width, config.height)
+      this.add.zone(config.width / 2, config.height / 2 - offset * 100, config.width, config.height),
     );
   }
 
-  centerButtonText (gameText, gameButton) {
+  centerButtonText(gameText, gameButton) {
     Phaser.Display.Align.In.Center(
       gameText,
-      gameButton
+      gameButton,
     );
   }
-};
+}

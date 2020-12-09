@@ -1,10 +1,10 @@
-import "phaser";
-import gameOptions from "../Config/gameOptions";
-import helpers from "../helpers";
+import 'phaser';
+import gameOptions from '../Config/gameOptions';
+import helpers from '../helpers';
 
 export default class GameScene extends Phaser.Scene {
   constructor() {
-    super("Game");
+    super('Game');
     this.gameOptions = gameOptions;
   }
 
@@ -21,42 +21,42 @@ export default class GameScene extends Phaser.Scene {
       this.gameOver();
     });
 
-    this.sky = this.add.tileSprite(400, 150, null, null, "sky").setScale(2);
+    this.sky = this.add.tileSprite(400, 150, null, null, 'sky').setScale(2);
 
     this.timeDisplay = this.add.text(70, 20, `${this.secondsRemaining}`, {
-      color: "rgb(0, 255, 0)",
-      fontSize: "44px",
-      fontWeight: "bold",
+      color: 'rgb(0, 255, 0)',
+      fontSize: '44px',
+      fontWeight: 'bold',
       border: '1px solid grey',
-      background: 'rgba(200, 200, 200, 0.8)'
+      background: 'rgba(200, 200, 200, 0.8)',
     });
 
     this.timeIcon = this.add.sprite(
       this.timeDisplay.x - 30,
       this.timeDisplay.y + 20,
-      'stopwatch'
+      'stopwatch',
     ).setDisplaySize(40, 40).setTintFill(0x999999);
 
     this.goldDisplay = this.add.text(70, 67, `${this.score}`, {
-      color: "gold",
-      fontSize: "50px",
-      fontWeight: "bold"
+      color: 'gold',
+      fontSize: '50px',
+      fontWeight: 'bold',
     });
 
     this.goldIcon = this.add.sprite(40, 90, 'coin').setDisplaySize(50, 50);
 
     this.mountains = this.add
-      .tileSprite(400, 250, null, null, "mountain")
+      .tileSprite(400, 250, null, null, 'mountain')
       .setTilePosition(200, 128)
       .setScale(1.2);
 
     this.distantPines = this.add
-      .tileSprite(400, 325, 800, null, "pines")
+      .tileSprite(400, 325, 800, null, 'pines')
       .setTilePosition(200, 0)
       .setScale(1.2);
 
     this.pines = this.add
-      .tileSprite(400, 410, 800, null, "distantPines")
+      .tileSprite(400, 410, 800, null, 'distantPines')
       .setTilePosition(200, 200)
       .setScale(1.2);
 
@@ -65,7 +65,7 @@ export default class GameScene extends Phaser.Scene {
       this.game.config.height - 40,
       this.game.config.width,
       80,
-      "ground"
+      'ground',
     );
 
     this.grass = this.add
@@ -74,22 +74,22 @@ export default class GameScene extends Phaser.Scene {
         this.game.config.height - 70,
         this.game.config.width,
         30,
-        "grass"
+        'grass',
       )
       .setTileScale(3.5, 4);
 
     this.grass = this.physics.add.existing(this.grass, true);
 
     this.platformGroup = this.add.group({
-      removeCallback: function(platform) {
+      removeCallback(platform) {
         platform.scene.platformPool.add(platform);
-      }
+      },
     });
 
     this.platformPool = this.add.group({
-      removeCallback: function(platform) {
+      removeCallback(platform) {
         platform.scene.platformGroup.add(platform);
-      }
+      },
     });
     this.addPlatform(150, game.config.width + 150);
 
@@ -97,7 +97,7 @@ export default class GameScene extends Phaser.Scene {
       .sprite(
         this.gameOptions.playerStartPosition,
         this.grass.y - 200,
-        "player"
+        'player',
       )
       .setScale(2);
 
@@ -106,24 +106,24 @@ export default class GameScene extends Phaser.Scene {
     this.player.jumping = false;
 
     this.anims.create({
-      key: "running",
-      frames: this.anims.generateFrameNumbers("player", { start: 9, end: 13 }),
+      key: 'running',
+      frames: this.anims.generateFrameNumbers('player', { start: 9, end: 13 }),
       frameRate: 15,
-      repeat: -1
+      repeat: -1,
     });
 
     this.anims.create({
-      key: "jumping",
-      frames: this.anims.generateFrameNumbers("player", { start: 15, end: 22 }),
+      key: 'jumping',
+      frames: this.anims.generateFrameNumbers('player', { start: 15, end: 22 }),
       frameRate: 15,
-      repeat: 0
+      repeat: 0,
     });
 
     this.anims.create({
-      key: "revolving coin",
-      frames: this.anims.generateFrameNumbers("coin"),
+      key: 'revolving coin',
+      frames: this.anims.generateFrameNumbers('coin'),
       frameRate: 20,
-      repeat: -1
+      repeat: -1,
     });
 
     this.physics.add.collider(this.player, this.platformGroup, () => {
@@ -140,7 +140,7 @@ export default class GameScene extends Phaser.Scene {
       }
     });
 
-    this.input.keyboard.on("keydown-SPACE", this.jump, this);
+    this.input.keyboard.on('keydown-SPACE', this.jump, this);
 
     this.time.addEvent({
       startAt: 0,
@@ -149,7 +149,7 @@ export default class GameScene extends Phaser.Scene {
       callback: () => {
         this.secondsElapsed++;
         this.secondsRemaining--;
-      }
+      },
     });
   }
 
@@ -166,7 +166,7 @@ export default class GameScene extends Phaser.Scene {
       platform = this.physics.add.sprite(
         posX,
         this.nextPlatformHeight,
-        helpers.getPlatformImage(platformWidth)
+        helpers.getPlatformImage(platformWidth),
       );
 
       platform.setDisplaySize(platformWidth, 25);
@@ -179,7 +179,7 @@ export default class GameScene extends Phaser.Scene {
     platform.displayWidth = platformWidth;
     this.nextPlatformDistance = Phaser.Math.Between(
       this.gameOptions.spawnRange[0],
-      this.gameOptions.spawnRange[1]
+      this.gameOptions.spawnRange[1],
     );
 
     if (this.platformGroup.getChildren().length > 1) {
@@ -188,8 +188,8 @@ export default class GameScene extends Phaser.Scene {
   }
 
   addCoin(platform) {
-    let topQuarter = this.game.config.height / 4;
-    let topHalf = topQuarter * 2;
+    const topQuarter = this.game.config.height / 4;
+    const topHalf = topQuarter * 2;
 
     if (platform) {
       if (platform.y < topQuarter) {
@@ -201,27 +201,25 @@ export default class GameScene extends Phaser.Scene {
       }
     }
 
-    let leftmostPoint = platform.x - platform.displayWidth / 2;
-    let rightmostPoint = platform.x + platform.displayWidth / 2;
+    const leftmostPoint = platform.x - platform.displayWidth / 2;
+    const rightmostPoint = platform.x + platform.displayWidth / 2;
 
     for (let i = 0; i < platform.numberOfCoins; i++) {
-      let coinPosition = Phaser.Math.FloatBetween(
+      const coinPosition = Phaser.Math.FloatBetween(
         leftmostPoint,
-        rightmostPoint
+        rightmostPoint,
       );
-      let coin = this.physics.add
-        .sprite(coinPosition, platform.y - platform.displayHeight * 2, "coin")
+      const coin = this.physics.add
+        .sprite(coinPosition, platform.y - platform.displayHeight * 2, 'coin')
         .setScale(2)
         .setGravityY(1000)
         .setVelocityX(this.gameOptions.platformStartSpeed * -1);
 
-      this.physics.add.collider(this.platformGroup, coin, () =>
-        coin.setVelocityX(0)
-      );
+      this.physics.add.collider(this.platformGroup, coin, () => coin.setVelocityX(0));
 
       coin.collectionAnimation = () => {
-        let collectedCoin = this.physics.add
-          .sprite(coin.x, coin.y - 50, "coin")
+        const collectedCoin = this.physics.add
+          .sprite(coin.x, coin.y - 50, 'coin')
           .setVelocityX(-gameOptions.platformStartSpeed)
           .setVelocityY(-50)
           .setGravityY(49);
@@ -238,7 +236,7 @@ export default class GameScene extends Phaser.Scene {
           this.coinGroup.remove(coin);
           this.collectCoin(coin);
           coin.collectionAnimation();
-          this.sound.play("coin1", { volume: 0.5, detune: 0.5, rate: 1.3 });
+          this.sound.play('coin1', { volume: 0.5, detune: 0.5, rate: 1.3 });
         });
       }
 
@@ -251,7 +249,7 @@ export default class GameScene extends Phaser.Scene {
       this.player.jumping = true;
       this.player.setVelocityY(gameOptions.jumpForce * -1);
       this.playerJumps--;
-      this.player.anims.play("jumping", false);
+      this.player.anims.play('jumping', false);
       helpers.playJumpSound(this);
     }
   }
@@ -264,49 +262,48 @@ export default class GameScene extends Phaser.Scene {
   update() {
     if (this.secondsRemaining >= 0) {
       this.player.x = this.gameOptions.playerStartPosition;
-  
+
       let minDistance = game.config.width;
-      this.platformGroup.getChildren().forEach(function(platform) {
-        let platformDistance =
-          game.config.width - platform.x - platform.displayWidth / 2;
+      this.platformGroup.getChildren().forEach(function (platform) {
+        const platformDistance = game.config.width - platform.x - platform.displayWidth / 2;
         minDistance = Math.min(minDistance, platformDistance);
         if (platform.x < -platform.displayWidth / 2) {
           this.platformGroup.killAndHide(platform);
           this.platformGroup.remove(platform);
         }
       }, this);
-  
+
       if (minDistance > this.nextPlatformDistance) {
-        var nextPlatformWidth = Phaser.Math.Between(
+        const nextPlatformWidth = Phaser.Math.Between(
           this.gameOptions.platformSizeRange[0],
-          this.gameOptions.platformSizeRange[1]
+          this.gameOptions.platformSizeRange[1],
         );
         this.addPlatform(
           nextPlatformWidth,
-          game.config.width + nextPlatformWidth / 2
+          game.config.width + nextPlatformWidth / 2,
         );
       }
-  
+
       if (this.player.body.touching.down) {
-        this.player.anims.play("running", true);
+        this.player.anims.play('running', true);
       } else if (!this.player.jumping) {
-        this.player.anims.play("jumping", false, 7);
+        this.player.anims.play('jumping', false, 7);
       }
-  
+
       this.coinGroup.getChildren().forEach(coin => {
         if (coin.x + coin.width / 2 < 0) {
           this.coinGroup.killAndHide(coin);
           this.coinGroup.remove(coin);
         } else {
-          coin.anims.play("revolving coin", true);
+          coin.anims.play('revolving coin', true);
         }
       });
-  
+
       this.collectedCoinGroup.getChildren().forEach(collectedCoin => {
-        collectedCoin.anims.play("revolving coin", true);
+        collectedCoin.anims.play('revolving coin', true);
         collectedCoin.anims.setTimeScale(5);
       });
-  
+
       this.moveBackground();
       this.updateDisplays();
     } else {
@@ -319,14 +316,14 @@ export default class GameScene extends Phaser.Scene {
     this.anims.pauseAll();
     this.submitScore(localStorage.getItem('username'), this.score);
 
-    this.gameOverDisplay = this.add.text(0, 0, `Time's Up!`, {
-      fontSize: "64px",
-      fill: "#000"
+    this.gameOverDisplay = this.add.text(0, 0, 'Time\'s Up!', {
+      fontSize: '64px',
+      fill: '#000',
     });
 
     this.gameOverDisplay.setPosition(
       this.game.config.width / 2 - this.gameOverDisplay.width / 2,
-      this.game.config.height / 4 - this.gameOverDisplay.height / 2
+      this.game.config.height / 4 - this.gameOverDisplay.height / 2,
     );
 
     this.finalScoreDisplay = this.add.text(
@@ -334,15 +331,15 @@ export default class GameScene extends Phaser.Scene {
       0,
       `You collected ${this.score} gold pieces. Well done!`,
       {
-        fontSize: "22px",
-        fill: "#fff"
-      }
+        fontSize: '22px',
+        fill: '#fff',
+      },
     );
-    
+
     this.finalScoreDisplay.setPosition(
       this.game.config.width / 2 - this.finalScoreDisplay.width / 2,
-      this.game.config.height / 2 - this.finalScoreDisplay.height / 2
-    );;
+      this.game.config.height / 2 - this.finalScoreDisplay.height / 2,
+    );
 
     this.gameOverInstruction = this.add.text(
       0,
@@ -353,26 +350,26 @@ export default class GameScene extends Phaser.Scene {
         'Press P to play again',
       ],
       {
-        fontSize: "22px",
-        fill: "#fff"
-      }
+        fontSize: '22px',
+        fill: '#fff',
+      },
     );
 
-    this.input.keyboard.on("keydown-M", () => {
-      this.scene.start("Title");
+    this.input.keyboard.on('keydown-M', () => {
+      this.scene.start('Title');
     });
 
-    this.input.keyboard.on("keydown-P", () => {
-      this.scene.start("Game");
+    this.input.keyboard.on('keydown-P', () => {
+      this.scene.start('Game');
     });
 
-    this.input.keyboard.on("keydown-L", () => {
-      this.scene.start("Leaderboard");
+    this.input.keyboard.on('keydown-L', () => {
+      this.scene.start('Leaderboard');
     });
 
     this.gameOverInstruction.setPosition(
       this.game.config.width / 2 - this.gameOverInstruction.width / 2,
-      (3 * this.game.config.height) / 4 - this.gameOverInstruction.height / 2
+      (3 * this.game.config.height) / 4 - this.gameOverInstruction.height / 2,
     );
   }
 
@@ -388,8 +385,8 @@ export default class GameScene extends Phaser.Scene {
     this.timeDisplay
       .setText(`${this.secondsRemaining}`)
       .setStyle({
-        color: `rgba(${this.secondsElapsed * 6.25}, ${255 -
-          this.secondsElapsed * 6.25}, 0)`
+        color: `rgba(${this.secondsElapsed * 6.25}, ${255
+          - this.secondsElapsed * 6.25}, 0)`,
       });
 
     this.goldDisplay.setText(`${this.score}`);
@@ -398,17 +395,17 @@ export default class GameScene extends Phaser.Scene {
   submitScore(username, score) {
     fetch(
       'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/lR6cnR2w4frbwCA1QKLu/scores',
-      { 
-        method: "POST",
+      {
+        method: 'POST',
         mode: 'cors',
         headers: {
-          "Content-Type": "application/json"
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           user: username,
-          score: score.toString()
-        })
+          score: score.toString(),
+        }),
       },
-      )
+    );
   }
 }

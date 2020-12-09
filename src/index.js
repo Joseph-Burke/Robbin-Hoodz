@@ -10,10 +10,10 @@ import LeaderboardScene from './Scenes/LeaderboardScene';
 import Model from './Model';
 import helpers from './helpers';
 
-if (localStorage.getItem("username")) {
+if (localStorage.getItem('username')) {
   document.getElementById('hide-unless-username').remove();
   class Game extends Phaser.Game {
-    constructor () {
+    constructor() {
       super(config);
       const model = new Model();
       this.globals = { model };
@@ -24,15 +24,15 @@ if (localStorage.getItem("username")) {
       this.scene.add('Credits', CreditsScene);
       this.scene.add('Game', GameScene);
       this.scene.add('Leaderboard', LeaderboardScene);
-      this.scene.start('Boot'); 
+      this.scene.start('Boot');
     }
   }
   window.game = new Game();
 } else {
   document.getElementById('hide-unless-username').classList.remove(['d-none']);
-  let input = document.getElementById('nameInput');
-  let button = document.getElementById('submitButton');
+  const input = document.getElementById('nameInput');
+  const button = document.getElementById('submitButton');
   button.addEventListener('click', () => {
     helpers.submitNameForm(input);
   });
-};
+}
