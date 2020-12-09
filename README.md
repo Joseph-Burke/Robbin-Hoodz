@@ -6,6 +6,8 @@ In it, you play as old-school outlaw **Robin Hood** as he flees from the scene o
 
 The aim of the game is to continue running along the platforms for the longest distance possible.
 
+![Gameplay Footage](./gameplay.gif)
+
 ## Built With
 
 - [PhaserJS](https://phaser.io/)

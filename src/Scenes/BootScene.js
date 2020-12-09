@@ -6,9 +6,10 @@ export default class BootScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.spritesheet("logo", "assets/images/adventurer-sheet.png", {
+    this.load.spritesheet('logo', 'assets/images/adventurer-sheet.png', {
       frameWidth: 50,
-      frameHeight: 37});
+      frameHeight: 37,
+    });
   }
 
   create() {
