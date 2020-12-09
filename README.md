@@ -11,6 +11,12 @@ All gold pieces can be found on platforms which you can jump up to by hitting th
 
 More gold pieces are found on the highest platforms, so the player is encouraged to spend as much time as possible running and jumping on the high-up platforms and is penalised in lost earnings if they fall to the ground.
 
+## Live Demo
+
+What are you waiting for?!
+
+**Play the Live Demo [here](https://keen-leakey-c08599.netlify.app/)!**
+
 ## Game Development
 
 > **_Explain what your initial objectives for the project were (at the end of the day 2) and which ones you did (or did not) achieve and why_**
@@ -42,12 +48,6 @@ In summary, I am very happy with the game and it's clear to me that writing a GD
 - [npm](https://www.npmjs.com/) with [webpack](https://webpack.js.org/)
 - Linted with [ESLint](https://eslint.org/)
 - Tested with [Jest](https://jestjs.io/)
-
-## Live Demo
-
-What are you waiting for?!
-
-**Play the Live Demo [here](https://keen-leakey-c08599.netlify.app/)!**
 
 ### Local Setup
 
