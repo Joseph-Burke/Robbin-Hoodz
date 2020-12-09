@@ -86,5 +86,4 @@ describe("fetches leaderboard data from the leaderboard API", () => {
       });
     });
   });
-
-})
+});
