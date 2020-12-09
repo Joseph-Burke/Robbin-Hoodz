@@ -1,4 +1,4 @@
-import 'phaser';
+import Phaser from 'phaser';
 import gameOptions from '../Config/gameOptions';
 import helpers from '../helpers';
 
@@ -10,7 +10,7 @@ export default class GameScene extends Phaser.Scene {
 
   create() {
     this.secondsElapsed = 0;
-    this.secondsRemaining = 60;
+    this.secondsRemaining = 2;
     this.score = 0;
     this.playerJumps = this.gameOptions.jumps;
     this.coinGroup = this.add.group();
@@ -91,7 +91,7 @@ export default class GameScene extends Phaser.Scene {
         platform.scene.platformGroup.add(platform);
       },
     });
-    this.addPlatform(150, game.config.width + 150);
+    this.addPlatform(150, this.game.config.width + 150);
 
     this.player = this.physics.add
       .sprite(
@@ -147,8 +147,8 @@ export default class GameScene extends Phaser.Scene {
       delay: 1000,
       loop: true,
       callback: () => {
-        this.secondsElapsed++;
-        this.secondsRemaining--;
+        this.secondsElapsed += 1;
+        this.secondsRemaining -= 1;
       },
     });
   }
@@ -204,7 +204,7 @@ export default class GameScene extends Phaser.Scene {
     const leftmostPoint = platform.x - platform.displayWidth / 2;
     const rightmostPoint = platform.x + platform.displayWidth / 2;
 
-    for (let i = 0; i < platform.numberOfCoins; i++) {
+    for (let i = 0; i < platform.numberOfCoins; i += 1) {
       const coinPosition = Phaser.Math.FloatBetween(
         leftmostPoint,
         rightmostPoint,
@@ -248,7 +248,7 @@ export default class GameScene extends Phaser.Scene {
     if (this.playerJumps > 0) {
       this.player.jumping = true;
       this.player.setVelocityY(gameOptions.jumpForce * -1);
-      this.playerJumps--;
+      this.playerJumps -= 1;
       this.player.anims.play('jumping', false);
       helpers.playJumpSound(this);
     }
@@ -256,14 +256,14 @@ export default class GameScene extends Phaser.Scene {
 
   collectCoin(coin) {
     coin.disableBody(true, true);
-    this.score++;
+    this.score += 1;
   }
 
   update() {
     if (this.secondsRemaining >= 0) {
       this.player.x = this.gameOptions.playerStartPosition;
 
-      let minDistance = game.config.width;
+      let minDistance = this.game.config.width;
       this.platformGroup.getChildren().forEach(function (platform) {
         const platformDistance = game.config.width - platform.x - platform.displayWidth / 2;
         minDistance = Math.min(minDistance, platformDistance);
@@ -280,7 +280,7 @@ export default class GameScene extends Phaser.Scene {
         );
         this.addPlatform(
           nextPlatformWidth,
-          game.config.width + nextPlatformWidth / 2,
+          this.game.config.width + nextPlatformWidth / 2,
         );
       }
 
@@ -314,7 +314,7 @@ export default class GameScene extends Phaser.Scene {
   gameOver() {
     this.physics.pause();
     this.anims.pauseAll();
-    this.submitScore(localStorage.getItem('username'), this.score);
+    helpers.submitScore(localStorage.getItem('username'), this.score);
 
     this.gameOverDisplay = this.add.text(0, 0, 'Time\'s Up!', {
       fontSize: '64px',
@@ -390,22 +390,5 @@ export default class GameScene extends Phaser.Scene {
       });
 
     this.goldDisplay.setText(`${this.score}`);
-  }
-
-  submitScore(username, score) {
-    fetch(
-      'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/lR6cnR2w4frbwCA1QKLu/scores',
-      {
-        method: 'POST',
-        mode: 'cors',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          user: username,
-          score: score.toString(),
-        }),
-      },
-    );
   }
 }

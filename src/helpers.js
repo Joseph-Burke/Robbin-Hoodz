@@ -1,3 +1,5 @@
+import Phaser from 'phaser';
+
 export default {
   calculateNextPlatformHeight: PreviousPlatform => {
     const { game } = PreviousPlatform.scene;
@@ -43,7 +45,9 @@ export default {
 
   getPlatformImage: platformWidth => {
     const platformImages = ['plank1', 'plank2', 'plank3'];
-    return platformWidth > 200 ? platformImages[2] : platformImages[Phaser.Math.Between(0, 1)];
+    return platformWidth > 200
+      ? platformImages[2]
+      : platformImages[Phaser.Math.Between(0, 1)];
   },
 
   playJumpSound: scene => {
@@ -58,9 +62,35 @@ export default {
 
   submitNameForm: event => {
     let username = event.value;
-    if (username === '') { username = 'Anonymous'; }
+    if (username === '') {
+      username = 'Anonymous';
+    }
 
     localStorage.setItem('username', username);
     window.location.reload();
+  },
+
+  fetchScores() {
+    return fetch(
+      'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/lR6cnR2w4frbwCA1QKLu/scores',
+      { mode: 'cors' },
+    ).then(response => response.json());
+  },
+
+  submitScore(username, score) {
+    fetch(
+      'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/lR6cnR2w4frbwCA1QKLu/scores',
+      {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user: username,
+          score: score.toString(),
+        }),
+      },
+    );
   },
 };

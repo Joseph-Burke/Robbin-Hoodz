@@ -1,4 +1,5 @@
-import 'phaser';
+import Phaser from 'phaser';
+import helpers from '../helpers';
 
 export default class LeaderboardScene extends Phaser.Scene {
   constructor() {
@@ -6,7 +7,7 @@ export default class LeaderboardScene extends Phaser.Scene {
   }
 
   async create() {
-    const scores = await this.fetchScores().then(
+    const scores = await helpers.fetchScores().then(
       scoresObject => scoresObject.result,
     );
     const topScores = scores.sort((a, b) => b.score - a.score).slice(0, 10);
@@ -24,16 +25,30 @@ export default class LeaderboardScene extends Phaser.Scene {
     const fontSize = '40px';
     const rowGap = 45;
 
-    for (let i = 0; i < topScores.length; i++) {
+    for (let i = 0; i < topScores.length; i += 1) {
+      let textColour;
+      switch (i) {
+        case 0:
+          textColour = 'gold';
+          break;
+        case 1:
+          textColour = 'silver';
+          break;
+        case 2:
+          textColour = '#cd7f32';
+          break;
+        default:
+          textColour = 'white';
+          break;
+      }
+
       this.add.text(
         leftColumn,
         firstScoreHeight + (rowGap * i),
         topScores[i].user,
         {
           fontSize,
-          color: `${
-            i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? '#cd7f32' : 'white'
-          }`,
+          color: textColour,
         },
       );
 
@@ -43,9 +58,7 @@ export default class LeaderboardScene extends Phaser.Scene {
         topScores[i].score,
         {
           fontSize,
-          color: `${
-            i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? '#cd7f32' : 'white'
-          }`,
+          color: textColour,
         },
       );
 
@@ -59,12 +72,5 @@ export default class LeaderboardScene extends Phaser.Scene {
         this.scene.start('Title');
       });
     }
-  }
-
-  fetchScores() {
-    return fetch(
-      'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/lR6cnR2w4frbwCA1QKLu/scores',
-      { mode: 'cors' },
-    ).then(response => response.json());
   }
 }
