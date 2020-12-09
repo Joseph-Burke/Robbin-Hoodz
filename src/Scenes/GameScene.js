@@ -10,7 +10,7 @@ export default class GameScene extends Phaser.Scene {
 
   create() {
     this.secondsElapsed = 0;
-    this.secondsRemaining = 2;
+    this.secondsRemaining = 60;
     this.score = 0;
     this.playerJumps = this.gameOptions.jumps;
     this.coinGroup = this.add.group();

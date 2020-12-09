@@ -6,7 +6,9 @@ export default class BootScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('logo', 'assets/zenva_logo.png');
+    this.load.spritesheet("logo", "assets/images/adventurer-sheet.png", {
+      frameWidth: 50,
+      frameHeight: 37});
   }
 
   create() {

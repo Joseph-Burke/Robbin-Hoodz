@@ -12,7 +12,7 @@ export default class PreloaderScene extends Phaser.Scene {
 
   preload() {
     // add logo image
-    this.add.image(400, 200, 'logo');
+    this.add.sprite(400, 175, 'logo', Phaser.Math.Between(0, 64)).setScale(3);
 
     // display progress bar
     const progressBar = this.add.graphics();
@@ -86,31 +86,27 @@ export default class PreloaderScene extends Phaser.Scene {
     // load assets needed in our game
     this.load.image('blueButton1', 'assets/ui/blue_button02.png');
     this.load.image('blueButton2', 'assets/ui/blue_button03.png');
-    this.load.image('phaserLogo', 'assets/logo.png');
     this.load.image('box', 'assets/ui/grey_box.png');
     this.load.image('checkedBox', 'assets/ui/blue_boxCheckmark.png');
-    this.load.image('sky', 'assets/Background/sky_cloud.png');
-    this.load.image('mountain', 'assets/Background/mountain2.png');
-    this.load.image('distantPines', 'assets/Background/pine2.png');
-    this.load.image('pines', 'assets/Background/pine1.png');
-    this.load.image('grass', 'assets/Tile/Grass/grass_1.png');
+    this.load.image('sky', 'assets/background/sky_cloud.png');
+    this.load.image('mountain', 'assets/background/mountain2.png');
+    this.load.image('distantPines', 'assets/background/pine2.png');
+    this.load.image('pines', 'assets/background/pine1.png');
+    this.load.image('grass', 'assets/images/grass_1.png');
 
-    this.load.image('plank1', 'assets/plank1.png');
-    this.load.image('plank2', 'assets/plank2.png');
-    this.load.image('plank3', 'assets/plank3.png');
+    this.load.image('plank1', 'assets/images/plank1.png');
+    this.load.image('plank2', 'assets/images/plank2.png');
+    this.load.image('plank3', 'assets/images/plank3.png');
 
-    this.load.spritesheet('ground', 'assets/Tile/Ground/ground_11.png', { frameWidth: 16, frameHeight: 16 });
-    this.load.spritesheet('player', 'assets/adventurer-Sheet.png', { frameWidth: 50, frameHeight: 37 });
-    this.load.spritesheet('coin', 'assets/coin.png', { frameWidth: 16, frameHeight: 16 });
-    this.load.image('stopwatch', 'assets/stopwatch-solid.svg');
+    this.load.spritesheet('ground', 'assets/images/ground_11.png', { frameWidth: 16, frameHeight: 16 });
+    this.load.spritesheet('player', 'assets/images/adventurer-sheet.png', { frameWidth: 50, frameHeight: 37 });
+    this.load.spritesheet('coin', 'assets/images/coin.png', { frameWidth: 16, frameHeight: 16 });
+    this.load.image('stopwatch', 'assets/images/stopwatch-solid.svg');
     this.load.audio('jump1', 'assets/sfx/jump1.wav');
     this.load.audio('jump2', 'assets/sfx/jump2.wav');
     this.load.audio('jump3', 'assets/sfx/jump3.wav');
     this.load.audio('jump4', 'assets/sfx/jump4.wav');
     this.load.audio('coin1', 'assets/sfx/coin1.mp3');
-    this.load.audio('rise1', 'assets/sfx/rise1.mp3');
-    this.load.audio('rise2', 'assets/sfx/rise2.mp3');
-    this.load.audio('rise3', 'assets/sfx/rise3.mp3');
     this.load.audio(songTitle, songURL);
   }
 
