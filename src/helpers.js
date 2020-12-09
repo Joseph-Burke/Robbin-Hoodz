@@ -59,7 +59,6 @@ export default {
 
   submitNameForm: event => {
     let username = event.value;
-    console.log(event);
     if (username === '') {username = 'Anonymous'};
 
     localStorage.setItem("username", username);
