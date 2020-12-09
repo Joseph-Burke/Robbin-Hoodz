@@ -4,7 +4,7 @@ Robbin' Hoodz is an "infinite runner" game made with PhaserJS.
 
 In it, you play as old-school renegade **Robin Hood** as he goes on another acrobatic rampage of vigilante wealth re-distribution.
 
-![Gameplay Footage](.public_media/gameplay.gif)
+![Gameplay Footage](./public_media/gameplay.gif)
 
 The aim of the game is to collect as many gold pieces as possible during sixty seconds.
 All gold pieces can be found on platforms which you can jump up to by hitting the spacebar - Robin can jump once, twice or thrice consecutively.
