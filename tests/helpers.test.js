@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import helpers from './helpers';
+import helpers from '../src/helpers';
 
 describe('gets a random song selection', () => {
   const songInfo = helpers.getRandomSong();
