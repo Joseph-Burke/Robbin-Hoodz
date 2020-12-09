@@ -161,7 +161,7 @@ export default class GameScene extends Phaser.Scene {
       platform.active = true;
       platform.visible = true;
       this.platformPool.remove(platform);
-      this.nextPlatformHeight = helpers.calculateNextPlatformHeight(platform);
+      this.nextPlatformHeight = helpers.calculateNextPlatformHeight(platform, this.player, this.game);
     } else {
       platform = this.physics.add.sprite(
         posX,

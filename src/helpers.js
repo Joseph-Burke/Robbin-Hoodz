@@ -1,9 +1,7 @@
 // import Phaser from 'phaser';
 
 export default {
-  calculateNextPlatformHeight: PreviousPlatform => {
-    const { game } = PreviousPlatform.scene;
-    const { player } = PreviousPlatform.scene.player;
+  calculateNextPlatformHeight: (previousPlatform, player, game) => {
     let lowestPlatformHeight;
     let highestPlatformHeight;
 
@@ -30,7 +28,7 @@ export default {
     if (nextHeight > 0) {
       return nextHeight;
     }
-    return PreviousPlatform.y;
+    return previousPlatform.y;
   },
 
   getRandomSong: () => {
