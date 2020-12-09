@@ -51,23 +51,39 @@ In summary, I am very happy with the game and it's clear to me that writing a GD
 
 ### Local Setup
 
+## Prerequisites
+
+Since the game's dependencies are managed by [npm](https://www.npmjs.com/), you must have **node.js** installed on your computer before following these set-up instructions. If you don't yet have node.js installed, you can choose a download method [here](https://nodejs.org/en/download/).
+
+## Setup Instructions
+
 To set this project up locally, follow these simple instructions:
 
 1. Open a Terminal and navigate to the location in your system where you would like to download the project. **New to Terminal? [Learn here](https://www.freecodecamp.org/news/conquering-the-command-line-f85f5e46c07c/).**
 
 2. Enter the following line of code to clone this repository:
 
-`git clone git@github.com:epinczinger/Robbin-Hoodz.git`
+`git clone git@github.com:Joseph-Burke/Robbin-Hoodz.git`
 
 3. Now that the repository has been cloned, navigate inside it using `cd Robbin-Hoodz`.
 
-4. The project's dependencies are managed by npm. To install them, enter the following line of code in the Terminal.
+4. The project's dependencies are managed by npm. The details of this project's dependencies can be found in `package.json` To install them, enter the following line of code in the Terminal.
 
 `npm install`
 
-5. Congratulations! All necessary files have been installed. To view the website, just open 'dist/index.html' in a browser of your choosing.
+5. Congratulations! All necessary files have been installed. To view the website, you can use the project's preconfigured npm script. Simply enter: `npm run start`. (This will bundle all relevant code into a single `build/project.bundle.js` file and then set up a local server to run the index.html file).
 
-## Authors
+## Testing
+
+This project's tests were created with [Jest](https://jestjs.io/). Once the project's dependencies have been installed (see Setup Instructions above), Jest will be available. **However**, the Jest Command Line Interface is only available if Jest is intalled globally:
+
+1. Run `npm install jest --global` to make Jest globally available.
+
+Once again, the project includes a handy script to run those tests for you:
+
+2. Now you can run `npm run test` or simply `jest` to run the project's tests.
+
+## Author
 
 👤 **Joe Burke**
 
