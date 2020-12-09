@@ -10,7 +10,6 @@ export default class LeaderboardScene extends Phaser.Scene {
     const scores = await helpers.fetchScores().then(
       scoresObject => scoresObject.result,
     );
-    console.log(scores);
     const topScores = scores.sort((a, b) => b.score - a.score).slice(0, 10);
 
     this.zone = this.add.zone(
